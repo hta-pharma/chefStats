@@ -1,0 +1,271 @@
+---
+title: "Function types"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Function types}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options: 
+  markdown: 
+    wrap: sentence
+
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE}
+library(chefStats)
+library(data.table)
+library(kableExtra)
+```
+
+
+This vignette presupposes basic familiarity with the chef package, specifically the endpoint specifications and the data_prepare steps
+
+## Statistical method types in chef and chefStats
+
+The chef framework categorizes statistical functions into three main categories depending on how they operate over stratification levels and treatment levels. Operations can either be done once per stratification level or treatment level, or they can operate across levels. 
+
+Figure 1 below shows a typical table from a safety analysis and color codes each result based on the function type that creates it:
+
+```{r statDesc, echo=FALSE, out.width="100%", fig.cap="Figure 1"}
+knitr::include_graphics("./figures/StatisticsDescription.png")
+```
+
+<br>
+Table 1 below provides a description of each of the three function types, color coded to the outputs they produce in table 1 above:
+
+```{r, echo=FALSE}
+dt <-
+  data.table::data.table(
+    Name = c(
+      cell_spec("stat_by_strata_and_trt", "html", color = "red"),
+      cell_spec("stat_by_strata_across_trt", "html", color = "green"),
+      cell_spec("stat_across_strata_across_trt", "html", color = "blue")
+    ),
+    Description = c(
+      "For each strata type (e.g. SEX, AGEGR, etc): one output per unique combination of strata level and treatment level",
+      "For each strata type (e.g. SEX, AGEGR, etc): one output per strata level, across treatment levels",
+      "One output per strata type (e.g. SEX, AGEGR, etc), across treatment levels"
+    ),
+    
+    `Example function` = c(  "`n_subj()` - Counts number of subjects in each stratification level and treatment level",
+      "`RR()` - Calculates the relative risk for the outcome/event within a stratification level",
+      "`p_val_interaction()` - Test of interaction effect for stratification level"
+    ),
+    `Example application` = c(
+      "What is the total number of Females in TreatmentA",
+      "What is the relative risk of having the outcome for females in Treatment A as compared to females in Treatment B",
+      "Is the risk of having the outcome different across the strata of SEX"
+    )
+  )
+dt |>
+  kable(format = "html",escape = FALSE,
+        table.attr = "class='table table-bordered'",
+        caption = "Table 1") |>
+  kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
+  row_spec(0, background = "lightblue") |>
+  column_spec(1, bold = TRUE, width = "10em",)
+
+```
+
+
+ 
+The function type also determines when the function is applied. In our example from figure 1, a <code style="color: red;">stat_by_strata_by_trt</code> function will be called once for each combination of stratification level and treatment level, as well as once for TOTALS for each treatment level: 
+
+  1. SEX == "MALE" & TRT == "TreatmentA"
+  2. SEX == "FEMALE" & TRT == "TreatmentA"
+  3. SEX == "MALE" & TRT == "TreatmentB"
+  3. SEX == "FEMALE" & TRT == "TreatmentB"
+  3. AGE == "<65" & TRT == "TreatmentA" 
+  3. AGE == ">=65" & TRT == "TreatmentA"
+  3. AGE == "<65" & TRT == "TreatmentB"
+  3. AGE == ">=65" & TRT == "TreatmentB"
+  3. TOTAL_ == "total" & TRT == "TreatmentA"
+  3. TOTAL_ == "total" & TRT == "TreatmentB"
+
+Whereas a `stat_across_strata_across_trt` will only be called once per stratification "group", i.e.:
+  
+  1. strata_var == "SEX"
+  1. strata_var == "AGE"
+
+
+## Adding new functions
+
+To add new functions to chefStats, you follow three general steps:
+
+
+  1. Consider what type of function you need: `stat_by_strata_by_trt`, `stat_by_strata_across_trt` or `stat_across_strata_across_trt`.
+  2. Decide what information the function needs in order to compute the desired results. See section [Interface with chef](#interface-with-chef)
+  3. Write the function definition (use `use_chefStats()` to help create the template)
+  4. Write the appropriate unit-tests for the function (using [testthat](https://testthat.r-lib.org/) framework)
+
+### Walk through example
+
+Here we show how we would add the function `n_subj_event()`, which counts the number of subjects experiencing the event by stratification level and treatment level, if it didn't already exist in chefStats.
+
+  1. Since the function produces a number by stratification level and by treatment level, this will be a `stat_by_strata_by_trt`
+  2. The function will need to know (see section [Interface with chef](#interface-with-chef) for more details on how to pass this information from chef to chefStats):
+      - Who was eligible to have the event
+      - Who has the event
+      - What the stratification "group" (e.g. SEX, AGE, etc) and level ("MALE", ">65", etc). is
+      - What the treatment level is (e.g. "TreatmentA")
+  3. The function definition might look like this:
+  
+```{r, eval=FALSE}
+  n_subj_event <-
+  function(dat,
+           event_index,
+           cell_index,
+           subjectid_var,
+           ... # the `...` are required for all chefStats functions to "collect" any unused arguments passed from chef
+           ) {
+    # Please see the "Interface with chef" section for details on what
+    # `event_index` and `cell_index`
+    
+    # `intersect()` provides us with a vector of rows in `dat` that match both
+    # `event_index` and `cell_index` - aka records that were BOTH eligible to
+    # have the event (`cell_index`) AND had the event (`event_index`)
+    index <- intersect(event_index, cell_index)
+    
+    # Return all matching rows in `dat` where `INDEX_`
+    # matches `index`.
+    event_rows <- dat[INDEX_ %in% index]
+    
+    # `dat` contains event data, meaning subjects can appear more than once if
+    # they have >1 event, so we need to remove these extra rows to get a proper
+    # count
+    event_rows_unique_by_subject <- unique(event_rows, by = subjectid_var)
+    
+    stat <-   NROW(event_rows_unique_by_subject)
+
+    # The return object has to be a data.table object with the following 3
+    # columns. The `value` column always has to be a double (not an integer)
+    return(
+      data.table(
+        description = "Number of subjects with events",
+        label = "n_subj_events",
+        value = as.double(stat)
+      )
+    )
+
+  }
+
+
+```
+  
+<style>
+/* Remove border around tab content */
+.tab-content {
+    border: none !important;
+}
+</style>
+### Interface with chef {.tabset .tabset-pills}
+
+The statistical functions from chefStats will be called within the context of a chef pipeline. The category of the function determines what arguments are passed from chef to the function, however some arguments are passed to all categories.
+
+The following table describes arguments that are passed to **all** chefStats function:
+
+```{r, echo=FALSE}
+dt <-
+  data.table::data.table(
+    `Argument Names` = c(
+      "`dat`",
+      "`event_index`",
+      "`strata_var`",
+      "`treatment_var`",
+      "`subjectid_var`"
+    ),
+    Description = c(
+      "A `data.table` containing the analysis data set produced by the `prepare_data` function. To allow flexability for creative use of chefStats functions, this dataset is **not** filtered to the exact records needed for each analysis when passed to chefStats. Instead this filtering is done inside the chefStats functions. This is done using the `INDEX_` column from `dat` that serves as a row ID, and is used for filtering with, for example, `cell_index` or `event_index`",
+      "A `vector` of indicies indicating which rows (as specified in `INDEX_` column of `dat`) are considered to be events for the endpoint specification under evaluation",
+      "A `character` indicating which stratatification is being used (e.g. SEX, AGE, etc)",
+      "A `character` indicating the name of the column in `dat` containing the treatment information used for the endpoint",
+      "A `character` specifying the name of the column in `dat` containing the subject ID. Defaults to \"USUBJID\""
+    )
+  )
+dt |>
+  kable(format = "html",
+        table.attr = "class='table table-bordered'",
+        caption = "Arguments always passed to chefStats functions") |>
+  kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
+  row_spec(0, background = "lightblue")
+```
+
+Additionally, each function type receives the following arguments
+
+#### stat_by_strata_by_trt
+
+```{r, echo=FALSE}
+dt <-
+  data.table::data.table(
+    `Argument Names` = c(
+      "`cell_index`",
+      "`strata_val`",
+      "`treatment_val`"
+    ),
+    Description = c(
+      "A `vector` of indicies specifying which rows in `dat` are considered to be part of the analysis for the given strata level and treatment level under evaluation. For example, if the current instance of the function was analysis \"Number of Events\" for SEX==\"M\" and TRT01A == \"Placebo\", then `cell_index` would be a vector of records in `dat$INDEX_` that match those parameters. You can thus obtain the analysis set by filtering `dat` via: `dat[cell_index %in% INDEX_]`",
+      "A `character` specifying the stratification level under evaluation. For example if `strat_var ==\"SEX\"`, then `strat_val` could be either `\"M\"` or `\"F\"`",
+      "A `character` specifying the treatment level (or treatment arm). *Not to be confused with the `treatment_refval` that specifies the reference treatment value."
+    )
+  )
+dt |>
+  kable(format = "html",
+        table.attr = "class='table table-bordered'",
+        caption = "Additional arguments passed to by_strata_by_trt functions") |>
+  kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
+  row_spec(0, background = "lightblue")
+```
+
+
+#### stat_by_strata_across_trt
+
+
+```{r, echo=FALSE}
+dt <-
+  data.table::data.table(
+    `Argument Names` = c("`cell_index`",
+                         "`strata_val`",
+                         "`treatment_refval`"),
+    Description = c(
+      "A `vector` of indicies specifying which rows in `dat` are considered to be part of the analysis for the given strata level and treatment level under evaluation. For example, if the current instance of the function was analysis \"Number of Events\" for SEX==\"M\" and TRT01A == \"Placebo\", then `cell_index` would be a vector of records in `dat$INDEX_` that match those parameters. You can thus obtain the analysis set by filtering `dat` via: `dat[cell_index %in% INDEX_]`",
+      "A `character` specifying the stratification level under evaluation. For example if `strat_var ==\"SEX\"`, then `strat_val` could be either `\"M\"` or `\"F\"`",
+      "A `character` specifying the treatment reference level. *Not to be confused with the `treatment_val` that specifies the treatment value for `by_strata_by_trt` functions"
+    )
+  )
+dt |>
+  kable(format = "html",
+        table.attr = "class='table table-bordered'",
+        caption = "Additional arguments passed to by_strata_across_trt functions") |>
+  kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
+  row_spec(0, background = "lightblue")
+```
+#### stat_by_strata_across_trt
+
+
+```{r, echo=FALSE}
+dt <-
+  data.table::data.table(
+    `Argument Names` = c("`strata_val`",
+                         "`treatment_refval`"),
+    Description = c(
+      "A `character` specifying the stratification level under evaluation. For example if `strat_var ==\"SEX\"`, then `strat_val` could be either `\"M\"` or `\"F\"`",
+      "A `character` specifying the treatment reference level. *Not to be confused with the `treatment_val` that specifies the treatment value for `by_strata_by_trt` functions"
+    )
+  )
+dt |>
+  kable(format = "html",
+        table.attr = "class='table table-bordered'",
+        caption = "Additional arguments passed to across_strata_across_trt functions") |>
+  kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
+  row_spec(0, background = "lightblue")
+```
+

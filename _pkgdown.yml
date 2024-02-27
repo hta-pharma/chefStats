@@ -1,0 +1,26 @@
+url: ~
+template:
+  bootstrap: 5
+
+reference:
+- title: "By strata and treatment level"
+  desc: >
+    Function that operate by strata level and treatment level
+  contents:
+  - n_subj
+  - n_event
+  - n_subj_event
+  - p_subj_event
+- title: "By strata, across treatment levels"
+  desc: >
+    Function that operate by strata level but across treatment levels
+  contents:
+  - RR
+  - OR
+  - RD
+  - p_val
+- title: "Across strata, across treatment level"
+  desc: >
+    Function that operate across strata levels and across treatment levels
+  contents:
+  - p_val_interaction

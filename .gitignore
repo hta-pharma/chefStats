@@ -1,0 +1,5 @@
+.Rproj.user
+docs
+inst/doc
+.Rhistory
+**/debug

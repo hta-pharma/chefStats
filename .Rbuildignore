@@ -1,0 +1,19 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+
+# Styling file
+setImgSrc.js
+
+# Ignore YAML files
+\.yml
+
+# Don't include .Rprofile
+^\.Rprofile$
+
+^Makefile$
+^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^README\.Rmd$
+^LICENSE\.md$

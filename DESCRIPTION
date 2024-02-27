@@ -1,0 +1,46 @@
+Package: chefStats
+Title: Provide methods for different statistics
+Version: 0.0.0.9001
+Authors@R:
+    c(person(given = "MEWP (Matthew Phelps)",
+             role = "aut",
+             email = "mewp@novonordisk.com"),
+      person(given = "NOSJ (Nicolai Skov Johnsen)",
+             role = "aut",
+             email = "nosj@novonordisk.com"),
+      person(given = "ABIU (Anders Bilgrau)",
+             role = "aut",
+             email = "abiu@novonordisk.com"),
+      person(given = "SCQY (scqy)",
+             role = "aut",
+             email = "scqy@novonordisk.com"),
+      person(given = "CINO (Christian Haargaard Olsen)",
+             role = c("aut", "cre"),
+             email = "cino@novonordisk.com"),
+      person(given = "Novo Nordisk A/S",
+             role = "cph"))
+Maintainer: Christian Haargaard Olsen <cino@novonordisk.com>
+Description: Provide a library of methods that can be used to calculate different statistics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    covr,
+    pkgdown,
+    testthat,
+    knitr,
+    rmarkdown,
+    chef,
+    pharmaverseadam,
+    tidyr,
+    purrr,
+    kableExtra
+Imports:
+    Barnard,
+    stats,
+    data.table (>= 1.14.2),
+    magrittr,
+    checkmate
+Config/testthat/edition: 3
+VignetteBuilder: knitr
