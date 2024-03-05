@@ -10,7 +10,6 @@
 #' @return Nothing, run for side-effect (writes file to disk)
 #' @export
 #'
-#' @examples
 use_chefStats <-
   function(fn_name,
            fn_type = c(

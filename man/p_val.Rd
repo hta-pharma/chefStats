@@ -36,12 +36,13 @@ for more information.}
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
 
 \item{safe_mode}{Boolean determing if the function should fail when given
-input that cannot be calculated (\code{safe_mode = TRUE}), or if it should}
+input that cannot be calculated (\code{safe_mode = TRUE}), or if it should silently return a \code{NA} value (default).}
 
 \item{threshold_lower}{numeric. Lower threshold limit for selecting Fischer vs. Barnard.}
 
-\item{threshold_upper}{numeric. Upper threshold limit for selecting Fischer vs. Barnard.
-silently return a \code{NA} value (default).}
+\item{threshold_upper}{numeric. Upper threshold limit for selecting Fischer vs. Barnard.}
+
+\item{...}{Optional parameters.}
 }
 \value{
 A data.table containing p-value statistics.

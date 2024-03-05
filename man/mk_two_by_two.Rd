@@ -14,15 +14,22 @@ mk_two_by_two(
 )
 }
 \arguments{
-\item{dat}{The ADaM table produced by baker}
+\item{dat}{data.table. The analysis data set.}
 
-\item{treatment_var}{character. The name of the treatment variable}
+\item{event_index}{vector of integers that index the rows in \code{dat} that match
+the definition of an 'event'. Matching is done via the \code{INDEX_} column in
+\code{dat}.}
 
-\item{treatment_refval}{character. The reference value of the treatment}
+\item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
+specified by the \code{INDEX_} column in \code{dat}) that match the population to be
+analyzed. See the "Endpoint Events" vignette in {ramnog}
+for more information.}
 
-\item{keepflg_var}{character. The name of the variable in the enriched ADaM
-data.table that contains the flag indicating whether each record fulfilled
-the criteria for being considered an event for the specific endpoint}
+\item{treatment_var}{character. The name of the treatment variable in \code{dat}.}
+
+\item{treatment_refval}{character. The reference value of the treatment variable in \code{dat}.}
+
+\item{subjectid_var}{character. Name of the subject identifier variable in \code{dat} (default is "USUBJID").}
 }
 \value{
 A matrix

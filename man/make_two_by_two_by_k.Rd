@@ -15,17 +15,17 @@ make_two_by_two_by_k(
 )
 }
 \arguments{
-\item{dat}{data.table. An enriched ADaM table}
+\item{dat}{data.table. The analysis data set.}
 
-\item{strata_var}{}
+\item{event_index}{vector of integers that index the rows in \code{dat} that match the definition of an 'event'. Matching is done via the \code{INDEX_} column in \code{dat}.}
 
-\item{treatment_var}{character. The name of the column containing the
-treatment value}
+\item{strata_var}{character. Variable in \code{dat} to stratify by specific for this call.}
 
-\item{treatment_refval}{character. The treatment reference group}
+\item{treatment_var}{character. The name of the treatment variable in \code{dat}.}
 
-\item{subjectid_var}{character. The name of the column in the enriched ADaM
-dataset containing the unique subject id (default = \code{USUBJID}).}
+\item{treatment_refval}{character. The reference value of the treatment variable in \code{dat}.}
+
+\item{subjectid_var}{character. Name of the subject identifier variable in \code{dat} (default is "USUBJID").}
 }
 \value{
 A two-by-two-by-k array where k represents the number of subgroups

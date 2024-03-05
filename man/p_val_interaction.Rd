@@ -34,6 +34,8 @@ the definition of an 'event'. Matching is done via the \code{INDEX_} column in
 \item{odds_ratio}{numeric. Odds Ration (default = NA).}
 
 \item{correct}{logical. If TRUE Tarones correction is returned (default = FALSE).}
+
+\item{...}{Optional parameters.}
 }
 \value{
 A data.table containing the statistics for p-value interaction tests.

@@ -14,6 +14,7 @@
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
+#' @param ... Optional parameters.
 #' 
 #' @return A data.table containing Relative Risk statistics.
 #' @export
@@ -70,6 +71,7 @@ RR <- function(dat,
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
+#' @param ... Optional parameters.
 #'
 #' @return A data.table containing Odds Ratio statistics.
 #' @export
@@ -127,6 +129,8 @@ OR <- function(dat,
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
+#' @param as_pct Boolean. 
+#' @param ... Optional parameters.
 #'
 #' @return A data.table containing Risk Difference statistics.
 #' @export
@@ -183,13 +187,13 @@ RD <- function(dat,
 #'   analyzed. See the "Endpoint Events" vignette in {ramnog}
 #'   for more information.
 #' @param safe_mode Boolean determing if the function should fail when given
-#'   input that cannot be calculated (`safe_mode = TRUE`), or if it should
+#'   input that cannot be calculated (`safe_mode = TRUE`), or if it should silently return a `NA` value (default).
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param threshold_lower numeric. Lower threshold limit for selecting Fischer vs. Barnard.
 #' @param threshold_upper numeric. Upper threshold limit for selecting Fischer vs. Barnard.
-#'   silently return a `NA` value (default).
+#' @param ... Optional parameters.  
 #' @return A data.table containing p-value statistics.
 #' @export
 p_val <-

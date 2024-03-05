@@ -24,7 +24,7 @@ Description: Provide a library of methods that can be used to calculate differen
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     covr,
     pkgdown,
@@ -41,6 +41,10 @@ Imports:
     stats,
     data.table (>= 1.14.2),
     magrittr,
-    checkmate
+    checkmate,
+    cli,
+    usethis
+Remotes:
+    hta-pharma/chef
 Config/testthat/edition: 3
 VignetteBuilder: knitr

@@ -12,14 +12,18 @@
 #'
 #'  Only observations that have a Treatment value recorded are returned.
 
-#'@param dat The ADaM table produced by baker
-#'@param treatment_var character. The name of the treatment variable
-#'@param treatment_refval character. The reference value of the treatment
-#'@param keepflg_var character. The name of the variable in the enriched ADaM
-#'  data.table that contains the flag indicating whether each record fulfilled
-#'  the criteria for being considered an event for the specific endpoint
-#'
-#' @return A matrix
+#' @param dat data.table. The analysis data set.
+#' @param event_index vector of integers that index the rows in `dat` that match
+#'   the definition of an 'event'. Matching is done via the `INDEX_` column in
+#'   `dat`.
+#' @param cell_index A vector of integers referencing the rows of `dat` (as
+#'   specified by the `INDEX_` column in `dat`) that match the population to be
+#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   for more information.
+#' @param treatment_var character. The name of the treatment variable in `dat`.
+#' @param treatment_refval character. The reference value of the treatment variable in `dat`.
+#' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
+#'@return A matrix
 #' @export
 #'
 mk_two_by_two <-
@@ -120,16 +124,12 @@ ensure_complete_two_by_two <- function(two_by_two_long, treatment_var) {
 #' generalized
 #'
 #'
-#' @param dat data.table. An enriched ADaM table
-#' @param treatment_refval character. The treatment reference group
-#' @param treatment_var character. The name of the column containing the
-#'   treatment value
-#' @param subjectid_var character. The name of the column in the enriched ADaM
-#'   dataset containing the unique subject id (default = `USUBJID`).
-#' @param event_index
-#' @param cell_index
-#' @param strata_var
-#'
+#' @param dat data.table. The analysis data set.
+#' @param event_index vector of integers that index the rows in `dat` that match the definition of an 'event'. Matching is done via the `INDEX_` column in `dat`.
+#' @param strata_var character. Variable in `dat` to stratify by specific for this call.
+#' @param treatment_var character. The name of the treatment variable in `dat`.
+#' @param treatment_refval character. The reference value of the treatment variable in `dat`.
+#' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
 #' @return A two-by-two-by-k array where k represents the number of subgroups
 #'   (strata).
 #' @export

@@ -10,6 +10,7 @@
 #' @param strata_var character. Variable in the analysis data to stratify by specific for this call.
 #' @param odds_ratio numeric. Odds Ration (default = NA).
 #' @param correct logical. If TRUE Tarones correction is returned (default = FALSE).
+#' @param ... Optional parameters.
 #'
 #' @return A data.table containing the statistics for p-value interaction tests.
 #' @export
