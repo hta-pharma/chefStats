@@ -4,6 +4,7 @@
       actual_total
     Output
                  label qualifiers value  description
+                <char>     <fctr> <num>       <char>
       1: n_non_missing     AGEGR1    85 Demographics
       2:     n_missing     AGEGR1     1 Demographics
       3: n_non_missing        SEX    82 Demographics
@@ -15,5 +16,6 @@
       actual_f
     Output
                  label  description qualifiers value
+                <char>       <char>     <char> <num>
       1: n_non_missing Demographics       <NA>    52
 
