@@ -12,6 +12,6 @@ utils::globalVariables(
     "stat_var",
     "value",
     "N_sub",
-    "N_no_event",
+    "N_no_event"
   )
 )

@@ -29,6 +29,10 @@ for more information.}
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
 
 \item{treatment_var}{character. Name of the treatment variable in the data.}
+
+\item{treatment_value}{character. Value of the treatment variable in the data.}
+
+\item{...}{Optional parameters.}
 }
 \value{
 A data.table containing the percentage of subjects with events by treatment.

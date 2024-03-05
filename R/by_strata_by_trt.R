@@ -301,7 +301,7 @@ total_missing_counts <- function(dat_cell, stratify_by) {
 #'   analyzed. See the "Endpoint Events" vignette in {ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
-#' @param treatment_var character. Name of the treatment variable in the data.
+#' @param var character. Name of the variable in the analysis data that is subject to the statistics.
 #' @param ... Optional parameters.
 #' 
 #' @return A data.table containing the percentage of subjects with events by treatment.
@@ -344,6 +344,8 @@ mean_value <- function(dat,
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param treatment_var character. Name of the treatment variable in the data.
+#' @param treatment_value character. Value of the treatment variable in the data.
+#' @param ... Optional parameters.
 #' 
 #' @return A data.table containing the percentage of subjects with events by treatment.
 #' @export

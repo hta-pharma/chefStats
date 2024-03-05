@@ -32,6 +32,10 @@ for more information.}
 \item{treatment_refval}{character. The reference value of the treatment variable in the data.}
 
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
+
+\item{as_pct}{Boolean.}
+
+\item{...}{Optional parameters.}
 }
 \value{
 A data.table containing Risk Difference statistics.

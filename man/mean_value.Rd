@@ -25,8 +25,6 @@ for more information.}
 \item{var}{character. Name of the variable in the analysis data that is subject to the statistics.}
 
 \item{...}{Optional parameters.}
-
-\item{treatment_var}{character. Name of the treatment variable in the data.}
 }
 \value{
 A data.table containing the percentage of subjects with events by treatment.
