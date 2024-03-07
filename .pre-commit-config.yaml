@@ -55,15 +55,15 @@ repos:
     rev: v1.2.3
     hooks: 
     -   id: no-commit-to-branch
-        args: ["--branch", "staging", "--branch", "main", "--branch", "dev"]
+        args: [--branch, staging, --branch, main, --branch, dev]
     -   id: check-added-large-files
         args: ['--maxkb=200']
     # -   id: file-contents-sorter
     #     files: '^\.Rbuildignore$'
-    -   id: end-of-file-fixer
-        exclude: >
-          '\.Rd'
-          'tests/testthat/_snaps'
+    # -   id: end-of-file-fixer
+    #     exclude: >
+    #       \.Rd|
+    #       tests/testthat/_snaps/*
     - id: detect-private-key
     # - id: detect-aws-credentials
 -   repo: local
