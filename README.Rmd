@@ -24,7 +24,7 @@ This project supports two styles of githooks.
 
 1.  The first style is to use the githooks provided in the `.githooks` directory. To use these hooks, run the following command in the root of the project:
   - These hooks are very simple just blocking the commit to protected branches.
-``
+```
 git config --local core.hooksPath .githooks/
 ```
 

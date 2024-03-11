@@ -16,4 +16,8 @@ setImgSrc.js
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
+^README\.html$	
 ^LICENSE\.md$
+^\.pre-commit-config\.yaml
+\.githooks
+\.github
