@@ -5,7 +5,7 @@
       branches: main
     workflow_dispatch:
 
-  name: release
+  name: Release Package
 
   jobs:
     build:
