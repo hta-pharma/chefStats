@@ -19,7 +19,7 @@ jobs:
     name: License Check 🃏
     uses: insightsengineering/r.pkg.template/.github/workflows/licenses.yaml@main
 
-  check-reuse:
+  check:
     name: RMD check 📦
     uses: ./.github/workflows/R-CMD-check.yaml
 

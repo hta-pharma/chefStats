@@ -1,13 +1,14 @@
 # Workflow adjusted from usethis::use_pkgdown_github_pages() to also publish pages from PRs in a subfolder
 
   on:
-    push:
-      branches: [main, master]
-    pull_request:
-      branches: [main, master]
-    release:
-      types: [published]
+    # push:
+    #   branches: [main, master]
+    # pull_request:
+    #   branches: [main, master]
+    # release:
+    #   types: [published]
     workflow_dispatch:
+    workflow_call:
   
   permissions:
     contents: write

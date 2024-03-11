@@ -21,3 +21,4 @@ setImgSrc.js
 ^\.pre-commit-config\.yaml
 \.githooks
 \.github
+RELEASE_BODY\.txt
