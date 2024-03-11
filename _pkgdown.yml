@@ -24,3 +24,19 @@ reference:
     Function that operate across strata levels and across treatment levels
   contents:
   - p_val_interaction
+- title: "Misc"
+  desc: >
+    Non-assigned
+  contents:
+  - demographics_continuous
+  - demographics_counts
+  - hedges_g
+  - make_two_by_two_by_k
+  - mean_value
+  - mk_two_by_two
+  - n_event_100y
+  - obs_time_by_trt
+  - p_subj_event_by_trt
+  - sd_value
+  - use_chefStats
+

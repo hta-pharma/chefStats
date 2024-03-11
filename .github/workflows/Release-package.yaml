@@ -1,0 +1,20 @@
+  on:
+    push:
+      branches: main
+    pull_request:
+      branches: main
+    workflow_dispatch:
+
+  name: release
+
+  jobs:
+    build:
+      name: RMD Build and check
+      uses: ./.github/workflows/R-CMD-check.yaml
+    docs:
+      name: Build and Deploy Docs
+      uses: ./.github/workflows/pkgdown.yaml
+    release:
+      name: Release
+      if: github.event_name == 'push'
+      uses: ./.github/workflows/release.yaml

@@ -19,7 +19,7 @@ jobs:
     name: License Check 🃏
     uses: insightsengineering/r.pkg.template/.github/workflows/licenses.yaml@main
 
-  check-reuse:
+  check:
     name: RMD check 📦
     uses: ./.github/workflows/R-CMD-check.yaml
 
@@ -37,11 +37,10 @@ jobs:
     name: Version Bump 🤜🤛
     if: github.event_name == 'push' && github.ref != 'refs/heads/main'
     uses: insightsengineering/r.pkg.template/.github/workflows/version-bump.yaml@main
+    with: 
+      disable-precommit-autoupdate: true
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # roxygen:
-  #   name: Roxygen 📦
-  #   uses: ./.github/workflows/Roxygen.yaml
 
   
