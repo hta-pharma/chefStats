@@ -16,5 +16,5 @@
       uses: ./.github/workflows/pkgdown.yaml
     release:
       name: Release
-      if: github.event_name == 'push'
+      if: github.event_name != 'pull_request'
       uses: ./.github/workflows/release.yaml

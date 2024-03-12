@@ -49,3 +49,4 @@ Remotes:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/testthat/parallel: true
+URL: https://hta-pharma.github.io/chefStats/

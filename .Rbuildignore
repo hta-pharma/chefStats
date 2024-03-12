@@ -22,3 +22,4 @@ setImgSrc.js
 \.githooks
 \.github
 RELEASE_BODY\.txt
+^\.github$
