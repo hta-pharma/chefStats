@@ -78,7 +78,7 @@
           - name: Get package version
             run: |
               echo "PACKAGE_VERSION=v$(awk -F: '/Version:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION)" >> $GITHUB_ENV
-              shell: bash
+            shell: bash
           
           - name: Check if running with dev tag 🏷️
             id: dev-tag
