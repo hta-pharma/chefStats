@@ -104,14 +104,15 @@
               files: |
                 LICENSE
                 LICENSE.md
+                ${{ env.PKGBUILD }}
               prerelease: inputs.pre-release
         
-          - name: Upload binaries to release 🔼
-            uses: svenstaro/upload-release-action@v2
-            with:
-              file: ${{ env.PKGBUILD }}
-              asset_name: ${{ env.PKGBUILD }}
-              tag: ${{ github.ref }}
-              overwrite: true
+          # - name: Upload binaries to release 🔼
+          #   uses: svenstaro/upload-release-action@v2
+          #   with:
+          #     file: ${{ env.PKGBUILD }}
+          #     asset_name: ${{ env.PKGBUILD }}
+          #     tag: ${{ github.ref }}
+          #     overwrite: true
 
           
