@@ -74,6 +74,11 @@
               echo "PKGBUILD=$(echo $(awk -F: '/Package:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION)_"\
               "$(awk -F: '/Version:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION).tar.gz)" >> $GITHUB_ENV
             shell: bash
+
+          - name: Get package version
+            run: |
+              echo "PACKAGE_VERSION=v$(awk -F: '/Version:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION)" >> $GITHUB_ENV
+              shell: bash
           
           - name: Check if running with dev tag 🏷️
             id: dev-tag
@@ -101,6 +106,8 @@
               body_path: RELEASE_BODY.txt
               token: ${{ steps.github-token.outputs.token }}
               generate_release_notes: true
+              name: ${{ env.PACKAGE_VERSION }}
+              tag: ${{ PACKAGE_VERSION}}
               files: |
                 LICENSE
                 LICENSE.md
