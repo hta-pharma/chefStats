@@ -107,7 +107,7 @@
               token: ${{ steps.github-token.outputs.token }}
               generate_release_notes: true
               name: ${{ env.PACKAGE_VERSION }}
-              tag: ${{ env.PACKAGE_VERSION}}
+              tag_name: ${{ env.PACKAGE_VERSION}}
               files: |
                 LICENSE
                 LICENSE.md
