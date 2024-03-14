@@ -95,9 +95,6 @@
               (awk "/^#+.*${REPOSITORY_NAME//./\.}.*${RELEASE_VERSION//./\.}$/{flag=1;next}/^#+.*${REPOSITORY_NAME//./\.}.*/{flag=0}flag" NEWS.md | grep -v "^$" || echo "* ${RELEASE_VERSION}") > RELEASE_BODY.txt
     
           - name: Create release 🌟
-            if: >-
-              steps.dev-tag.outputs.is-rc-tag == 'false' ||
-                inputs.create-dev-releases == true
             # https://github.com/softprops/action-gh-release/pull/406#issuecomment-1934635958
             uses: softprops/action-gh-release@4634c16e79c963813287e889244c50009e7f0981
             with:
