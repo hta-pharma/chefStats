@@ -45,7 +45,23 @@
           - name: Get branch names 🌿
             id: branch-name
             uses: tj-actions/branch-names@v7
-    
+
+          - name: Create pkg tarball 📦
+            run: |
+              R CMD build .
+            shell: bash
+
+          - name: Get package build filename 📦
+            run: |
+              echo "PKGBUILD=$(echo $(awk -F: '/Package:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION)_"\
+              "$(awk -F: '/Version:/{gsub(/[ ]+/,"") ; print $2}' DESCRIPTION).tar.gz)" >> $GITHUB_ENV
+            shell: bash
+
+          - name: Download artifact ⏬
+            uses: actions/download-artifact@v4
+            with:
+              name: ${{ env.PKGBUILD }}
+          
           - name: Check if running with dev tag 🏷️
             id: dev-tag
             run: |
@@ -79,3 +95,13 @@
                 LICENSE
                 LICENSE.md
               prerelease: inputs.pre-release
+        
+          - name: Upload binaries to release 🔼
+            uses: svenstaro/upload-release-action@v2
+            with:
+              file: ${{ env.PKGBUILD }}
+              asset_name: ${{ env.PKGBUILD }}
+              tag: ${{ github.ref }}
+              overwrite: true
+
+          
