@@ -42,27 +42,31 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          covr::package_coverage(
+          covr::codecov(
             type = "none",
-            code = "options(testthat.output_file = file.path(normalizePath(Sys.getenv('RUNNER_TEMP'), winslash = '/'), 'reports', 'test-out.xml'));testthat::test_dir('tests/testthat', reporter = 'junit')",
+            code = "testthat::test_package(
+              'chefStats',
+              reporter = testthat::JunitReporter$new(file = 'test-results.xml')
+              )",
             install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package"),
-            clean = FALSE,
-            quiet = FALSE)
+            clean=FALSE,
+            quiet=FALSE
+            )
         shell: Rscript {0}
 
-      - name: Show testthat output in console
-        if: always()
-        run: |
-          ## --------------------------------------------------------------------
-          find '${{ runner.temp }}/package' -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
+      # - name: Show testthat output in console
+      #   if: always()
+      #   run: |
+      #     ## --------------------------------------------------------------------
+      #     find '${{ runner.temp }}/package' -name 'testthat.Rout*' -exec cat '{}' \; || true
+      #   shell: bash
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: |
-            ${{ runner.temp }}/reports/test-out.xml
+            test-results.xml
 
       - name: Upload test results
         if: failure()
