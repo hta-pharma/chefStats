@@ -8,6 +8,7 @@ name: test-coverage
 permissions:
   contents: read
   pull-requests: write
+  checks: write
 
 jobs:
   test-coverage:
@@ -75,14 +76,15 @@ jobs:
       #   shell: bash
 
       - name: Publish Test Results
+        
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: |
             $GITHUB_WORKSPACE/test-results.xml
-            test-results.xml
-            **/test-results.xml
-            **/**/test-results.xml
+            # test-results.xml
+            # **/test-results.xml
+            # **/**/test-results.xml
 
       - name: Upload test results
         if: failure()
