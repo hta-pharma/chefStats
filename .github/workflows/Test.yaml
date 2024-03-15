@@ -58,9 +58,13 @@ jobs:
         run: |
           echo "runner.temp: ${{ runner.temp }}"
           echo "runner.workspace: ${{ runner.workspace }}"
-          echo "GITHUB_WORKSPACE: ${{ github.workspace }}"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "github.workspace: ${{ github.workspace }}"
           ls -l ${{ runner.temp }}
           ls -l ${{ runner.temp }}/package
+          echo "WORKSPACE"
+          ls -l $GITHUB_WORKSPACE
+
         shell: bash
 
       # - name: Show testthat output in console
@@ -75,7 +79,10 @@ jobs:
         if: always()
         with:
           files: |
-            ${{ env.GITHUB_WORKSPACE }}/test-results.xml
+            $GITHUB_WORKSPACE/test-results.xml
+            test-results.xml
+            **/test-results.xml
+            **/**/test-results.xml
 
       - name: Upload test results
         if: failure()
