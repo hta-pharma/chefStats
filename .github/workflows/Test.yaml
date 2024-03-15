@@ -46,7 +46,7 @@ jobs:
             type = "none",
             code = "testthat::test_package(
               'chefStats',
-              reporter = testthat::JunitReporter$new(file = 'test-results.xml')
+              reporter = testthat::JunitReporter$new(file = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "test-results.xml"))
               )",
             install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package"),
             clean=FALSE,
@@ -66,7 +66,7 @@ jobs:
         if: always()
         with:
           files: |
-            test-results.xml
+            ${{ env.RUNNER_TEMP }}/test-results.xml
 
       - name: Upload test results
         if: failure()
