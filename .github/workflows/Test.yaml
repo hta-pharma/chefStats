@@ -44,7 +44,7 @@ jobs:
         run: |
           covr::package_coverage(
             type = "none",
-            code = "options(testthat.output_file = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "reports", "test-out.xml"));testthat::test_dir('tests/testthat', reporter = 'junit')",
+            code = "options(testthat.output_file = file.path(normalizePath(Sys.getenv('RUNNER_TEMP'), winslash = '/'), 'reports', 'test-out.xml'));testthat::test_dir('tests/testthat', reporter = 'junit')",
             install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package"),
             clean = FALSE,
             quiet = FALSE)
