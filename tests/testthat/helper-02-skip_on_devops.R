@@ -4,4 +4,3 @@ skip_on_devops <- function() {
   }
   testthat::skip("On DevOps")
 }
-
