@@ -1,22 +1,16 @@
-  on:
-    push:
-      branches: main
-    pull_request:
-      branches: main
-    workflow_dispatch:
+on:
+  push:
+    branches: [main, stage, dev]
+  pull_request:
+    branches: [main, stage, dev]
+  workflow_dispatch:
 
-  name: Release Package
+name: Check Package 📦
 
-  jobs:
-    build:
-      name: RMD Build and check
-      uses: ./.github/workflows/R-CMD-check.yaml
-    docs:
-      needs: build
-      name: Build and Deploy Docs
-      uses: ./.github/workflows/pkgdown.yaml
-    release:
-      needs: [build, docs]
-      name: Release
-      if: github.event_name != 'pull_request'
-      uses: ./.github/workflows/release.yaml
+jobs:
+  check:
+    name: Release (from ramnog)
+    uses: hta-pharma/ramnog/.github/workflows/Release-package.yaml@main
+
+
+  
