@@ -25,7 +25,7 @@ p_val_interaction <- function(dat,
                               ...) {
 
   two_by_two_by_k <-
-    make_two_by_two_by_k(
+    make_two_by_two_by_k_(
       dat = dat,
       event_index = event_index,
       strata_var = strata_var,
@@ -36,7 +36,7 @@ p_val_interaction <- function(dat,
 
   valid <- validate_breslow_day(two_by_two_by_k)
   if (valid) {
-    stat <- breslowdaytest(
+    stat <- breslowdaytest_(
       two_by_two_by_k,
       odds_ratio = odds_ratio,
       correct = correct

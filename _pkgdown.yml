@@ -10,6 +10,7 @@ reference:
   - n_event
   - n_subj_event
   - p_subj_event
+  - count_set
 - title: By strata, across treatment levels
   desc: |
     Function that operate by strata level but across treatment levels
@@ -22,6 +23,19 @@ reference:
   desc: |
     Function that operate across strata levels and across treatment levels
   contents: p_val_interaction
+- title: Building-block functions
+  desc: |
+    These are used as building blocks when making the chef-facing functions. They are exported so that they can also be use in chefCriteria but they cannot be called directly in a chef pipeline
+  contents:
+  - breslowdaytest_
+  - barnard_test_
+  - make_two_by_two_by_k_
+  - make_two_by_two_
+  - n_sub_
+  - n_event_
+  - n_subj_event_
+  - p_subj_event_
+  - use_chefStats
 - title: Misc
   desc: |
     Non-assigned
@@ -29,11 +43,8 @@ reference:
   - demographics_continuous
   - demographics_counts
   - hedges_g
-  - make_two_by_two_by_k
   - mean_value
-  - mk_two_by_two
   - n_event_100y
   - obs_time_by_trt
   - p_subj_event_by_trt
   - sd_value
-  - use_chefStats

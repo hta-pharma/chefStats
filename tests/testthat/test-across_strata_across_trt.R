@@ -104,7 +104,7 @@ test_that("p-val interaction work (breslow-day)", {
 
   # Combine male and female 2x2 tables
   arr <- simplify2array(list(two_by_two_m, two_by_two_f))
-  expected <- breslowdaytest(arr,
+  expected <- breslowdaytest_(arr,
     odds_ratio = NA,
     correct = FALSE
   )

@@ -26,7 +26,7 @@
 #'@return A matrix
 #' @export
 #'
-mk_two_by_two <-
+make_two_by_two_ <-
   function(dat,
            event_index,
            cell_index,
@@ -39,7 +39,7 @@ mk_two_by_two <-
       length()
     if (n_trt_levels != 2) {
       stop(
-        "mk_two_by_two only supports copmarison between two treatment levels. ",
+        "make_two_by_two_ only supports copmarison between two treatment levels. ",
         "This dataset has ",
         n_trt_levels,
         " treatment levels"
@@ -133,7 +133,7 @@ ensure_complete_two_by_two <- function(two_by_two_long, treatment_var) {
 #' @return A two-by-two-by-k array where k represents the number of subgroups
 #'   (strata).
 #' @export
-make_two_by_two_by_k <-
+make_two_by_two_by_k_ <-
   function(dat,
            event_index,
            strata_var,
@@ -141,12 +141,12 @@ make_two_by_two_by_k <-
            treatment_refval,
            subjectid_var) {
     # Cell index is not relevant for `across_strata_across_trt`, but to simplify
-    # the code we make a dummy cell_index to pass to mk_two_by_two
+    # the code we make a dummy cell_index to pass to make_two_by_two_
     cell_index <- dat$INDEX_
 
     x <- lapply(
       split(dat, by = strata_var),
-      mk_two_by_two,
+      make_two_by_two_,
       event_index,
       cell_index,
       treatment_var,

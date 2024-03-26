@@ -1,22 +1,17 @@
 test_that("RR works", {
   # SETUP -------------------------------------------------------------------
-  ep <- ep_base(
-    stratify_by = list(c("SEX")),
-    data_prepare = mk_adae,
-    custom_pop_filter = "TRT01A != 'Xanomeline Low Dose'",
-    endpoint_filter = "AEDECOD == \"ERYTHEMA\"",
-    stat_by_strata_across_trt = list(RR)
-  ) |>
-    helper_pipeline_by_strata_across_trt()
+  setup <- setup_by_strata_across_trt()
   # ACT ---------------------------------------------------------------------
-  actual <-
-    chef::apply_stats(ep$ep,
-      ep$analysis_data_container,
-      type = "stat_by_strata_across_trt"
-    ) |>
-    tidyr::unnest(cols = stat_result) |>
-    setDT()
-
+  AEDECOD <- TRT01A <- SAFFL <- USUBJID <- label <- NULL
+  actual_total <- RR(
+    dat = setup$input,
+    event_index = setup$event_index,
+    cell_index = setup$cell_index_total,
+    treatment_var = "TRT01A",
+    treatment_refval = "Xanomeline High Dose",
+    subjectid_var = "USUBJID"
+  )
+  
   # EXPECT ------------------------------------------------------------------
   x <- mk_adae()
   x[, has_event := FALSE]
@@ -54,36 +49,43 @@ test_that("RR works", {
     NROW()
 
   rr <- (a / sum(a, b)) / (c_ / sum(c_, d))
-  expect_equal(actual[label == "RR" &
-    strata_var == "TOTAL_"]$value, rr)
-  expect_type(actual$value, "double")
+  expect_equal(actual_total[label == "RR"]$value, rr)
+  expect_type(actual_total$value, "double")
 })
 
 
 test_that("RR works when 0 events", {
   # SETUP -------------------------------------------------------------------
-  ep <- ep_base(
-    data_prepare = mk_adae,
-    stratify_by = list(c("SEX")),
-    custom_pop_filter = "TRT01A != 'Xanomeline Low Dose'",
-    endpoint_filter = "AESEV == \"SEVERE\"",
-    group_by = list(list(AESOC = "GASTROINTESTINAL DISORDERS")),
-    stat_by_strata_across_trt = list(RR)
-  ) |>
-    helper_pipeline_by_strata_across_trt()
+  AESEV <- TRT01A <- SAFFL <- USUBJID <- label <-  AESOC <- SEX <- NULL
+  input <- mk_adae(study_metadata = NULL)
+  input[, INDEX_ := .I] |> data.table::setkey(INDEX_)
+  cell_index_f <-
+    input[SAFFL == "Y" &
+            (TRT01A == "Placebo" |
+               TRT01A == "Xanomeline High Dose")
+             & SEX == "F"][["INDEX_"]]
+  cell_index_total <-
+    input[SAFFL == "Y" &
+            (TRT01A == "Placebo" |
+               TRT01A == "Xanomeline High Dose")][["INDEX_"]]
+  event_index <-
+    input[AESEV == "SEVERE" & AESOC == "GASTROINTESTINAL DISORDERS"][["INDEX_"]]
+  
+  
   # ACT ---------------------------------------------------------------------
-  actual <-
-    chef::apply_stats(ep$ep,
-      ep$analysis_data_container,
-      type = "stat_by_strata_across_trt"
-    ) |>
-    tidyr::unnest(stat_result) |>
-    setDT()
-  actual <- actual[strata_var == "SEX"]
-
+  actual_female <- RR(
+    dat = input,
+    event_index = event_index,
+    cell_index = cell_index_f,
+    treatment_var = "TRT01A",
+    treatment_refval = "Xanomeline High Dose",
+    subjectid_var = "USUBJID"
+  )
+  
+  
   # EXPECT ------------------------------------------------------------------
-  x <- mk_adae()[TRT01A != "Xanomeline Low Dose"]
-  x <- x[SAFFL == "Y" & SEX == "M"]
+  x <- mk_adae(study_metadata = NULL)[TRT01A != "Xanomeline Low Dose"]
+  x <- x[SAFFL == "Y" & SEX == "F"]
   x[, event := FALSE]
   x[AESEV == "SEVERE" &
     AESOC == "GASTROINTESTINAL DISORDERS", event := TRUE]
@@ -111,34 +113,33 @@ test_that("RR works when 0 events", {
     x[!(event) & TRT01A == "Placebo"] |> NROW() + 0.5
 
   rr <- (a / sum(a, b)) / (c / sum(c, d))
-  expect_equal(actual[label == "RR" &
-    strata_var == "SEX" &
-    grepl("M", stat_filter)]$value, rr)
-  expect_type(actual$value, "double")
+  se <-
+    sqrt(+1 / a + 1 / c - 1 / sum(a,b) - 1 /
+           sum(c,d))
+  
+  expect_equal(actual_female[label == "RR"]$value, rr)
+  expect_equal(actual_female[label == "SE"]$value, se)
+  
+  
 })
 
 
 test_that("OR works", {
   # SETUP -------------------------------------------------------------------
-  ep <- ep_base(
-    stratify_by = list(c("SEX")),
-    data_prepare = mk_adae,
-    custom_pop_filter = "TRT01A != 'Xanomeline Low Dose'",
-    endpoint_filter = "AEDECOD == \"ERYTHEMA\"",
-    stat_by_strata_across_trt = list(OR)
-  ) |>
-    helper_pipeline_by_strata_across_trt()
+  setup <- setup_by_strata_across_trt()
   # ACT ---------------------------------------------------------------------
   actual <-
-    chef::apply_stats(ep$ep,
-      ep$analysis_data_container,
-      type = "stat_by_strata_across_trt"
-    ) |>
-    tidyr::unnest(cols = stat_result) |>
-    setDT()
-
+    OR(
+      dat = setup$input,
+      event_index = setup$event_index,
+      cell_index = setup$cell_index_total,
+      treatment_var = "TRT01A",
+      treatment_refval = "Xanomeline High Dose",
+      subjectid_var = "USUBJID"
+    )
+  
   # EXPECT ------------------------------------------------------------------
-  x <- mk_adae()
+  x <- mk_adae(study_metadata = NULL)
   x[, has_event := FALSE]
   x[AEDECOD == "ERYTHEMA", has_event := TRUE]
   x <- x |>
@@ -174,8 +175,7 @@ test_that("OR works", {
     NROW()
 
   or <- prod(a, d) / prod(b, c_)
-  expect_equal(actual[label == "OR" &
-    strata_var == "TOTAL_"]$value, or)
+  expect_equal(actual[label == "OR"]$value, or)
   expect_type(actual$value, "double")
 })
 

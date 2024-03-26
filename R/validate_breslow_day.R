@@ -1,7 +1,7 @@
 #' Validate inputs to breslow-day function
 #'
 #' @param two_by_two_by_k A two-by-two-by-k table, usually produced
-#' by `make_two_by_two_by_k()`.
+#' by `make_two_by_two_by_k_()`.
 #'
 #' @return A Boolean TRUE/FALSE
 #' @noRd

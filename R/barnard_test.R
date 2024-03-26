@@ -9,8 +9,8 @@
 #'
 #' @return 2-sided p-value for the Barnards Unconditional Exact test
 #' @importFrom Barnard barnard.test
-#' @noRd
-barnard_test <-
+
+barnard_test_ <-
   function(two_by_two,
            verbose = FALSE,
            safe_mode = TRUE) {
