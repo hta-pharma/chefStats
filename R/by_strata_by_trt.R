@@ -154,7 +154,7 @@ p_subj_event <-
 
 
 
-#' @title Produce counts of Numeber of subjects, number of events, number of
+#' @title Produce counts of Number of subjects, number of events, number of
 #'   subjects with events, and proportion of subjects with events
 #'
 #' @description A short cut - instead of calling the individual function
@@ -173,7 +173,7 @@ p_subj_event <-
 #'   analyzed. See the "Endpoint Events" vignette in {ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
-#' @param ... Optional parameters.#'
+#' @param ... Optional parameters.
 #' @return a data.table containing all statistical outputs
 #' @export
 #'

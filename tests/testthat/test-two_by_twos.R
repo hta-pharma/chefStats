@@ -1,4 +1,4 @@
-test_that("mk_two_by_two adds empty levels in 2x2 table", {
+test_that("make_two_by_two_ adds empty levels in 2x2 table", {
 
 # SETUP -------------------------------------------------------------------
   input <- mk_adae()
@@ -10,7 +10,7 @@ test_that("mk_two_by_two adds empty levels in 2x2 table", {
 
 
 # ACT ---------------------------------------------------------------------
-  actual <- mk_two_by_two(
+  actual <- make_two_by_two_(
       dat = input,
       event_index = event_index,
       cell_index = cell_index,

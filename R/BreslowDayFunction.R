@@ -7,8 +7,7 @@
 #' @return A vector with three values statistic - Breslow and Day test
 #'   statistic pval - p value evtl. based on the Tarone test statistic using a
 #'    \eqn{\chi^2(K-1)} distribution
-#' @noRd
-breslowdaytest <- function(x, odds_ratio = NA, correct = FALSE) {
+breslowdaytest_ <- function(x, odds_ratio = NA, correct = FALSE) {
 
   # Function to perform the Breslow and Day (1980) test including the
   # corrected test by Tarone Uses the equations in Lachin (2000),

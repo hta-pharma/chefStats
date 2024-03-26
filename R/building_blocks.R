@@ -44,10 +44,9 @@ n_event_ <- function(dat, intersect_index) {
 #' @param subjectid_var character. Name of the subject identifier variable in
 #'   the data (default is "USUBJID").
 #'
-#' @return
+#' @return an interger value
 #' @export
 #'
-#' @examples
 n_subj_event_ <- function(dat, intersect_index, subjectid_var) {
   dat[list(intersect_index)] |>
     data.table::uniqueN(by = subjectid_var)
@@ -66,10 +65,8 @@ n_subj_event_ <- function(dat, intersect_index, subjectid_var) {
 #' @param subjectid_var character. Name of the subject identifier variable in
 #'   the data (default is "USUBJID").
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return an integer value
+#' @export 
 p_subj_event_ <-
   function(dat,
            cell_index,
