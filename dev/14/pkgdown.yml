@@ -1,0 +1,12 @@
+pandoc: 3.1.11
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  add_functions: add_functions.html
+  chefStats: chefStats.html
+  function_types: function_types.html
+last_built: 2024-03-26T12:42Z
+urls:
+  reference: https://hta-pharma.github.io/chefStats/reference
+  article: https://hta-pharma.github.io/chefStats/articles
+
