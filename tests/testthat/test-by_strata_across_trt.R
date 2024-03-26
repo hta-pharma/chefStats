@@ -2,7 +2,7 @@ test_that("RR works", {
   # SETUP -------------------------------------------------------------------
   setup <- setup_by_strata_across_trt()
   # ACT ---------------------------------------------------------------------
-  
+  AEDECOD <- TRT01A <- SAFFL <- USUBJID <- label <- NULL
   actual_total <- RR(
     dat = setup$input,
     event_index = setup$event_index,
@@ -50,14 +50,15 @@ test_that("RR works", {
 
   rr <- (a / sum(a, b)) / (c_ / sum(c_, d))
   expect_equal(actual_total[label == "RR"]$value, rr)
-  expect_type(actual$value, "double")
+  expect_type(actual_total$value, "double")
 })
 
 
 test_that("RR works when 0 events", {
   # SETUP -------------------------------------------------------------------
+  AESEV <- TRT01A <- SAFFL <- USUBJID <- label <-  AESOC <- SEX <- NULL
   input <- mk_adae(study_metadata = NULL)
-  input[, INDEX_ := .I] |> setkey(INDEX_)
+  input[, INDEX_ := .I] |> data.table::setkey(INDEX_)
   cell_index_f <-
     input[SAFFL == "Y" &
             (TRT01A == "Placebo" |
@@ -83,7 +84,7 @@ test_that("RR works when 0 events", {
   
   
   # EXPECT ------------------------------------------------------------------
-  x <- mk_adae()[TRT01A != "Xanomeline Low Dose"]
+  x <- mk_adae(study_metadata = NULL)[TRT01A != "Xanomeline Low Dose"]
   x <- x[SAFFL == "Y" & SEX == "F"]
   x[, event := FALSE]
   x[AESEV == "SEVERE" &
@@ -131,14 +132,14 @@ test_that("OR works", {
     OR(
       dat = setup$input,
       event_index = setup$event_index,
-      cell_index = setup$cell_index_f,
+      cell_index = setup$cell_index_total,
       treatment_var = "TRT01A",
       treatment_refval = "Xanomeline High Dose",
       subjectid_var = "USUBJID"
     )
   
   # EXPECT ------------------------------------------------------------------
-  x <- mk_adae()
+  x <- mk_adae(study_metadata = NULL)
   x[, has_event := FALSE]
   x[AEDECOD == "ERYTHEMA", has_event := TRUE]
   x <- x |>
@@ -174,8 +175,7 @@ test_that("OR works", {
     NROW()
 
   or <- prod(a, d) / prod(b, c_)
-  expect_equal(actual[label == "OR" &
-    strata_var == "TOTAL_"]$value, or)
+  expect_equal(actual[label == "OR"]$value, or)
   expect_type(actual$value, "double")
 })
 
