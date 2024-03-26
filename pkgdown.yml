@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   chefStats: chefStats.html
   function_types: function_types.html
-last_built: 2024-03-21T12:11Z
+last_built: 2024-03-26T07:58Z
 urls:
   reference: https://hta-pharma.github.io/chefStats/reference
   article: https://hta-pharma.github.io/chefStats/articles
