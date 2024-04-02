@@ -17,5 +17,4 @@ As the functions found in chefStats are designed to be used with chef, it may be
 
 # Developer Documentation
 
-Please refer to {ramnog} for general developer documentation.
-[Ramnog Developer Documentation](https://hta-pharma.github.io/ramnog/articles/#:~:text=Debugging-,Development,-Git%20Workflow)
+Please refer to {ramnog} for general [developer documentation](https://hta-pharma.github.io/ramnog/articles/#:~:text=Debugging-,Development,-Git%20Workflow).
