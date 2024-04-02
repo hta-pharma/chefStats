@@ -85,17 +85,17 @@
 
     
     
-<p>To add new functions to chefStats, you follow three general
-steps:</p>
+<p>To add new functions to {chefStats}, you must follow these four
+general steps:</p>
 <ol style="list-style-type: decimal">
 <li>Consider what type of function you need:
 <code>stat_by_strata_by_trt</code>,
 <code>stat_by_strata_across_trt</code> or
-<code>stat_across_strata_across_trt</code> (see article <a href="https://hta-pharma.github.io/chefStats/articles/function_types.html">Function
-types</a>.</li>
+<code>stat_across_strata_across_trt</code>. See article [Function
+types](<a href="https://hta-pharma.github.io/chefStats/articles/function_types.html" class="uri">https://hta-pharma.github.io/chefStats/articles/function_types.html</a>.</li>
 <li>Decide what information the function needs in order to compute the
 desired results. See section <a href="#interface-with-chef">Interface
-with chef</a>
+with {chef}</a>
 </li>
 <li>Write the function definition (use <code><a href="../reference/use_chefStats.html">use_chefStats()</a></code> to
 help create the template)</li>
@@ -103,23 +103,23 @@ help create the template)</li>
 </li>
 </ol>
 <div class="section level3">
-<h3 id="walk-through-example">Walk through example<a class="anchor" aria-label="anchor" href="#walk-through-example"></a>
+<h3 id="walkthrough-example">Walkthrough example<a class="anchor" aria-label="anchor" href="#walkthrough-example"></a>
 </h3>
 <p>Here we show how we would add the function
 <code><a href="../reference/n_subj_event.html">n_subj_event()</a></code>, which counts the number of subjects
 experiencing the event by stratification level and treatment level, if
-it didn’t already exist in chefStats.</p>
+it did not already exist in {chefStats}.</p>
 <ol style="list-style-type: decimal">
 <li>Since the function produces a number by stratification level and by
 treatment level, this will be a <code>stat_by_strata_by_trt</code>
 </li>
-<li>The function will need to know (see section <a href="#interface-with-chef">Interface with chef</a> for more details on
-how to pass this information from chef to chefStats):
+<li>The function will need to know. See section <a href="#interface-with-chef">Interface with chef</a> for more details on
+how to pass this information from {chef} to {chefStats}:
 <ul>
 <li>Who was eligible to have the event</li>
 <li>Who has the event</li>
 <li>What the stratification “group” (e.g. SEX, AGE, etc) and level
-(“MALE”, “&gt;65”, etc). is</li>
+(“MALE”, “&gt;65”, etc.) is</li>
 <li>What the treatment level is (e.g. “TreatmentA”)</li>
 </ul>
 </li>
@@ -131,9 +131,9 @@ how to pass this information from chef to chefStats):
 <span>           <span class="va">event_index</span>,</span>
 <span>           <span class="va">cell_index</span>,</span>
 <span>           <span class="va">subjectid_var</span>,</span>
-<span>           <span class="va">...</span> <span class="co"># the `...` are required for all chefStats functions to "collect" any unused arguments passed from chef</span></span>
+<span>           <span class="va">...</span> <span class="co"># the `...` are required for all {chefStats} functions to "collect" any unused arguments passed from {chef}</span></span>
 <span>           <span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="co"># Please see the "Interface with chef" section for details on what</span></span>
+<span>    <span class="co"># Please see the "Interface with {chef}" section for details on what</span></span>
 <span>    <span class="co"># `event_index` and `cell_index`</span></span>
 <span>    </span>
 <span>    <span class="co"># `intersect()` provides us with a vector of rows in `dat` that match both</span></span>
@@ -150,7 +150,7 @@ how to pass this information from chef to chefStats):
 <span>    <span class="co"># count</span></span>
 <span>    <span class="va">event_rows_unique_by_subject</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">event_rows</span>, by <span class="op">=</span> <span class="va">subjectid_var</span><span class="op">)</span></span>
 <span>    </span>
-<span>    <span class="va">stat</span> <span class="op">&lt;-</span>   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">event_rows_unique_by_subject</span><span class="op">)</span></span>
+<span>    <span class="va">stat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">event_rows_unique_by_subject</span><span class="op">)</span></span>
 <span></span>
 <span>    <span class="co"># The return object has to be a data.table object with the following 3</span></span>
 <span>    <span class="co"># columns. The `value` column always has to be a double (not an integer)</span></span>
@@ -172,17 +172,17 @@ how to pass this information from chef to chefStats):
 <p><br></p>
 </div>
 <div class="section level3 tabset tabset-pills">
-<h3 class="tabset tabset-pills" id="interface-with-chef">Interface with chef<a class="anchor" aria-label="anchor" href="#interface-with-chef"></a>
+<h3 class="tabset tabset-pills" id="interface-with-chef">Interface with {chef}<a class="anchor" aria-label="anchor" href="#interface-with-chef"></a>
 </h3>
-<p>The statistical functions from chefStats will be called within the
-context of a chef pipeline. The category of the function determines what
-arguments are passed from chef to the function, however some arguments
-are passed to all categories.</p>
+<p>The statistical functions from {chefStats} will be called within the
+context of a {chef} pipeline. The category of the function determines
+what arguments are passed from {chef} to the function, however some
+arguments are passed to all categories.</p>
 <p>The following table describes arguments that are passed to
-<strong>all</strong> chefStats function:</p>
+<strong>all</strong> {chefStats} function:</p>
 <table class="table table table-bordered table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <caption>
-Arguments always passed to chefStats functions
+Arguments always passed to {chefStats} functions
 </caption>
 <thead><tr>
 <th style="text-align:left;background-color: lightblue !important;">
@@ -200,13 +200,13 @@ Description
 <td style="text-align:left;">
 A <code>data.table</code> containing the analysis data set produced by
 the <code>prepare_data</code> function. To allow flexability for
-creative use of chefStats functions, this dataset is
+creative use of {chefStats} functions, this dataset is
 <strong>not</strong> filtered to the exact records needed for each
-analysis when passed to chefStats. Instead this filtering is done inside
-the chefStats functions. This is done using the <code>INDEX_</code>
-column from <code>dat</code> that serves as a row ID, and is used for
-filtering with, for example, <code>cell_index</code> or
-<code>event_index</code>
+analysis when passed to {chefStats}. Instead this filtering is done
+inside the {chefStats} functions. This is done using the
+<code>INDEX_</code> column from <code>dat</code> that serves as a row
+ID, and is used for filtering with, for example, <code>cell_index</code>
+or <code>event_index</code>
 </td>
 </tr>
 <tr>
@@ -418,20 +418,20 @@ statistical functions. For example, if the new functions requires a 2x2
 table, use the <code><a href="../reference/make_two_by_two_.html">make_two_by_two_()</a></code> function instead of
 writing a new one.</p>
 <p>This also allows you to easily write functions that collapse several
-chefStats functions into one function call. For example, on call to
+{chefStats} functions into one function call. For example, on call to
 <code><a href="../reference/count_set.html">count_set()</a></code> is the same as one call each to
 <code>n_sub()</code>, <code><a href="../reference/n_event.html">n_event()</a></code>,
 <code><a href="../reference/n_subj_event.html">n_subj_event()</a></code> and <code><a href="../reference/p_subj_event.html">p_subj_event()</a></code>. The only
 rational for combining functions like this is to save compute time, due
-to the way chef pipelines are constructed.</p>
+to the way {chef} pipelines are constructed.</p>
 <p>Building block function names are always suffixed with an underscore
-<code>_</code> to indicate they cannot be called from inside a chef
+<code>_</code> to indicate they cannot be called from inside a {chef}
 pipeline. For example, <code><a href="../reference/n_event_.html">n_event_()</a></code> is a building block that
 is used to make <code><a href="../reference/n_event.html">n_event()</a></code>, but <code><a href="../reference/n_event_.html">n_event_()</a></code> can
 also be use to build other functions, such as <code><a href="../reference/count_set.html">count_set()</a></code>,
-because it does not format it’s output for a chef pipeline. Conversely,
-<code><a href="../reference/n_event.html">n_event()</a></code> does format the output, so it can be use in a
-chef pipeline, but not as a building block.</p>
+because it does not format it’s output for a {chef} pipeline.
+Conversely, <code><a href="../reference/n_event.html">n_event()</a></code> does format the output, so it can be
+use in a {chef} pipeline, but not as a building block.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
