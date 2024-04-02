@@ -19,7 +19,7 @@
 #'   the lower 95%CI
 #' @noRd
 
-relative_risk <- function(two_by_two) {
+relative_risk_ <- function(two_by_two) {
   #AMNOG rule - if any cells are zero, add 0.5 to each cell
 
   if (prod(two_by_two) == 0) {

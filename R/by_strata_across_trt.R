@@ -27,7 +27,7 @@ RR <- function(dat,
                ...) {
   # Test a 2x2 contingency table
   two_by_two <-
-    mk_two_by_two(
+    make_two_by_two_(
       dat = dat,
       event_index = event_index,
       cell_index = cell_index,
@@ -35,7 +35,7 @@ RR <- function(dat,
       treatment_refval = treatment_refval,
       subjectid_var = subjectid_var
     )
-  out <- relative_risk(two_by_two)
+  out <- relative_risk_(two_by_two)
   desc <-
     vapply(names(out), function(x) {
       switch(x,
@@ -43,7 +43,7 @@ RR <- function(dat,
         "RRLL" = "Relative Risk 95%-CI lower limit",
         "RRUL" = "Relative Risk 95%-CI upper limit",
         "SE" = "Relative Risk standard error",
-        error_name_mismatch(x, "relative_risk()")
+        error_name_mismatch(x, "relative_risk_()")
       )
     }, FUN.VALUE = character(1L))
 
@@ -84,7 +84,7 @@ OR <- function(dat,
                ...) {
   # Test a 2x2 contingency table
   two_by_two <-
-    mk_two_by_two(
+    make_two_by_two_(
       dat = dat,
       event_index = event_index,
       cell_index = cell_index,
@@ -144,7 +144,7 @@ RD <- function(dat,
                ...) {
   # Test a 2x2 contingency table
   two_by_two <-
-    mk_two_by_two(
+    make_two_by_two_(
       dat = dat,
       event_index = event_index,
       cell_index = cell_index,
@@ -208,7 +208,7 @@ p_val <-
            threshold_upper = 200,
            ...) {
     two_by_two <-
-      mk_two_by_two(
+      make_two_by_two_(
         dat = dat,
         event_index = event_index,
         cell_index = cell_index,
@@ -223,7 +223,7 @@ p_val <-
       message("----- Calculating Barnards test - this may take a minute \n")
     }
     pval <- switch(test_method,
-      "barnard" = barnard_test(two_by_two = two_by_two, safe_mode = safe_mode),
+      "barnard" = barnard_test_(two_by_two = two_by_two, safe_mode = safe_mode),
       "fisher" = stats::fisher.test(two_by_two)$p.val
     )
 
