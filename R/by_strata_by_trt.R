@@ -177,7 +177,6 @@ p_subj_event <-
 #' @return a data.table containing all statistical outputs
 #' @export
 #'
-#' @examples
 count_set <- function(dat,
                    event_index,
                    cell_index,
