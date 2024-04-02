@@ -21,24 +21,24 @@ library(data.table)
 library(kableExtra)
 ```
 
-To add new functions to chefStats, you follow three general steps:
+To add new functions to {chefStats}, you must follow these four general steps:
 
 
-  1. Consider what type of function you need: `stat_by_strata_by_trt`, `stat_by_strata_across_trt` or `stat_across_strata_across_trt` (see article [Function types](https://hta-pharma.github.io/chefStats/articles/function_types.html).
-  2. Decide what information the function needs in order to compute the desired results. See section [Interface with chef](#interface-with-chef)
+  1. Consider what type of function you need: `stat_by_strata_by_trt`, `stat_by_strata_across_trt` or `stat_across_strata_across_trt`. See article [Function types](https://hta-pharma.github.io/chefStats/articles/function_types.html.
+  2. Decide what information the function needs in order to compute the desired results. See section [Interface with {chef}](#interface-with-chef)
   3. Write the function definition (use `use_chefStats()` to help create the template)
   4. Write the appropriate unit-tests for the function (using [testthat](https://testthat.r-lib.org/) framework)
 <br>
 
-### Walk through example
+### Walkthrough example
 
-Here we show how we would add the function `n_subj_event()`, which counts the number of subjects experiencing the event by stratification level and treatment level, if it didn't already exist in chefStats.
+Here we show how we would add the function `n_subj_event()`, which counts the number of subjects experiencing the event by stratification level and treatment level, if it did not already exist in {chefStats}.
 
   1. Since the function produces a number by stratification level and by treatment level, this will be a `stat_by_strata_by_trt`
-  2. The function will need to know (see section [Interface with chef](#interface-with-chef) for more details on how to pass this information from chef to chefStats):
+  2. The function will need to know. See section [Interface with chef](#interface-with-chef) for more details on how to pass this information from {chef} to {chefStats}:
       - Who was eligible to have the event
       - Who has the event
-      - What the stratification "group" (e.g. SEX, AGE, etc) and level ("MALE", ">65", etc). is
+      - What the stratification "group" (e.g. SEX, AGE, etc) and level ("MALE", ">65", etc.) is
       - What the treatment level is (e.g. "TreatmentA")
   3. The function definition might look like this:
   
@@ -48,9 +48,9 @@ Here we show how we would add the function `n_subj_event()`, which counts the nu
            event_index,
            cell_index,
            subjectid_var,
-           ... # the `...` are required for all chefStats functions to "collect" any unused arguments passed from chef
+           ... # the `...` are required for all {chefStats} functions to "collect" any unused arguments passed from {chef}
            ) {
-    # Please see the "Interface with chef" section for details on what
+    # Please see the "Interface with {chef}" section for details on what
     # `event_index` and `cell_index`
     
     # `intersect()` provides us with a vector of rows in `dat` that match both
@@ -67,7 +67,7 @@ Here we show how we would add the function `n_subj_event()`, which counts the nu
     # count
     event_rows_unique_by_subject <- unique(event_rows, by = subjectid_var)
     
-    stat <-   NROW(event_rows_unique_by_subject)
+    stat <- NROW(event_rows_unique_by_subject)
 
     # The return object has to be a data.table object with the following 3
     # columns. The `value` column always has to be a double (not an integer)
@@ -93,11 +93,11 @@ Here we show how we would add the function `n_subj_event()`, which counts the nu
 
 <br>
 
-### Interface with chef {.tabset .tabset-pills}
+### Interface with {chef} {.tabset .tabset-pills}
 
-The statistical functions from chefStats will be called within the context of a chef pipeline. The category of the function determines what arguments are passed from chef to the function, however some arguments are passed to all categories.
+The statistical functions from {chefStats} will be called within the context of a {chef} pipeline. The category of the function determines what arguments are passed from {chef} to the function, however some arguments are passed to all categories.
 
-The following table describes arguments that are passed to **all** chefStats function:
+The following table describes arguments that are passed to **all** {chefStats} function:
 
 ```{r, echo=FALSE}
 dt <-
@@ -110,7 +110,7 @@ dt <-
       "`subjectid_var`"
     ),
     Description = c(
-      "A `data.table` containing the analysis data set produced by the `prepare_data` function. To allow flexability for creative use of chefStats functions, this dataset is **not** filtered to the exact records needed for each analysis when passed to chefStats. Instead this filtering is done inside the chefStats functions. This is done using the `INDEX_` column from `dat` that serves as a row ID, and is used for filtering with, for example, `cell_index` or `event_index`",
+      "A `data.table` containing the analysis data set produced by the `prepare_data` function. To allow flexability for creative use of {chefStats} functions, this dataset is **not** filtered to the exact records needed for each analysis when passed to {chefStats}. Instead this filtering is done inside the {chefStats} functions. This is done using the `INDEX_` column from `dat` that serves as a row ID, and is used for filtering with, for example, `cell_index` or `event_index`",
       "A `vector` of indicies indicating which rows (as specified in `INDEX_` column of `dat`) are considered to be events for the endpoint specification under evaluation",
       "A `character` indicating which stratatification is being used (e.g. SEX, AGE, etc)",
       "A `character` indicating the name of the column in `dat` containing the treatment information used for the endpoint",
@@ -120,7 +120,7 @@ dt <-
 dt |>
   kable(format = "html",
         table.attr = "class='table table-bordered'",
-        caption = "Arguments always passed to chefStats functions") |>
+        caption = "Arguments always passed to {chefStats} functions") |>
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
   row_spec(0, background = "lightblue")
 ```
@@ -205,6 +205,6 @@ dt |>
 
 When possible, utilize building-block functions when making new statistical functions. For example, if the new functions requires a 2x2 table, use the `make_two_by_two_()` function instead of writing a new one.
 
-This also allows you to easily write functions that collapse several chefStats functions into one function call. For example, on call to `count_set()` is the same as one call each to `n_sub()`, `n_event()`, `n_subj_event()` and `p_subj_event()`. The only rational for combining functions like this is to save compute time, due to the way chef pipelines are constructed. 
+This also allows you to easily write functions that collapse several {chefStats} functions into one function call. For example, on call to `count_set()` is the same as one call each to `n_sub()`, `n_event()`, `n_subj_event()` and `p_subj_event()`. The only rational for combining functions like this is to save compute time, due to the way {chef} pipelines are constructed. 
 
-Building block function names are always suffixed with an underscore `_` to indicate they cannot be called from inside a chef pipeline. For example, `n_event_()` is a building block that is used to make `n_event()`, but `n_event_()` can also be use to build other functions, such as `count_set()`, because it does not format it's output for a chef pipeline. Conversely, `n_event()` does format the output, so it can be use in a chef pipeline, but not as a building block.
+Building block function names are always suffixed with an underscore `_` to indicate they cannot be called from inside a {chef} pipeline. For example, `n_event_()` is a building block that is used to make `n_event()`, but `n_event_()` can also be use to build other functions, such as `count_set()`, because it does not format it's output for a {chef} pipeline. Conversely, `n_event()` does format the output, so it can be use in a {chef} pipeline, but not as a building block.
