@@ -10,6 +10,9 @@
     <loc>https://hta-pharma.github.io/chefStats/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://hta-pharma.github.io/chefStats/articles/add_functions.html</loc>
+  </url>
+  <url>
     <loc>https://hta-pharma.github.io/chefStats/articles/chefStats.html</loc>
   </url>
   <url>
@@ -37,6 +40,15 @@
     <loc>https://hta-pharma.github.io/chefStats/reference/RR.html</loc>
   </url>
   <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/barnard_test_.html</loc>
+  </url>
+  <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/breslowdaytest_.html</loc>
+  </url>
+  <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/count_set.html</loc>
+  </url>
+  <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/demographics_continuous.html</loc>
   </url>
   <url>
@@ -49,19 +61,25 @@
     <loc>https://hta-pharma.github.io/chefStats/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://hta-pharma.github.io/chefStats/reference/make_two_by_two_by_k.html</loc>
+    <loc>https://hta-pharma.github.io/chefStats/reference/make_two_by_two_.html</loc>
+  </url>
+  <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/make_two_by_two_by_k_.html</loc>
   </url>
   <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/mean_value.html</loc>
   </url>
   <url>
-    <loc>https://hta-pharma.github.io/chefStats/reference/mk_two_by_two.html</loc>
-  </url>
-  <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/n_event.html</loc>
   </url>
   <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/n_event_.html</loc>
+  </url>
+  <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/n_event_100y.html</loc>
+  </url>
+  <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/n_sub_.html</loc>
   </url>
   <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/n_subj.html</loc>
@@ -70,10 +88,16 @@
     <loc>https://hta-pharma.github.io/chefStats/reference/n_subj_event.html</loc>
   </url>
   <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/n_subj_event_.html</loc>
+  </url>
+  <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/obs_time_by_trt.html</loc>
   </url>
   <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/p_subj_event.html</loc>
+  </url>
+  <url>
+    <loc>https://hta-pharma.github.io/chefStats/reference/p_subj_event_.html</loc>
   </url>
   <url>
     <loc>https://hta-pharma.github.io/chefStats/reference/p_subj_event_by_trt.html</loc>

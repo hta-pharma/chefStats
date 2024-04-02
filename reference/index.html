@@ -27,6 +27,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/add_functions.html">Adding new functions</a>
     <a class="dropdown-item" href="../articles/function_types.html">Function types</a>
   </div>
 </li>
@@ -77,6 +78,12 @@
           <code><a href="p_subj_event.html">p_subj_event()</a></code> 
         </dt>
         <dd>Calculate percentage of subjects with events by treatment and stratum</dd>
+      </dl><dl><dt>
+          
+          <code><a href="count_set.html">count_set()</a></code> 
+        </dt>
+        <dd>Produce counts of Number of subjects, number of events, number of
+subjects with events, and proportion of subjects with events</dd>
       </dl></div><div class="section level2">
       <h2 id="by-strata-across-treatment-levels">By strata, across treatment levels<a class="anchor" aria-label="anchor" href="#by-strata-across-treatment-levels"></a></h2>
       
@@ -125,6 +132,63 @@
         </dt>
         <dd>Wrapper for P-value of interaction tests</dd>
       </dl></div><div class="section level2">
+      <h2 id="building-block-functions">Building-block functions<a class="anchor" aria-label="anchor" href="#building-block-functions"></a></h2>
+      
+      <p class="section-desc"></p><p>These are used as building blocks when making the chef-facing functions. They are exported so that they can also be use in chefCriteria but they cannot be called directly in a chef pipeline</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="breslowdaytest_.html">breslowdaytest_()</a></code> 
+        </dt>
+        <dd>Breslow-Day test</dd>
+      </dl><dl><dt>
+          
+          <code><a href="barnard_test_.html">barnard_test_()</a></code> 
+        </dt>
+        <dd>Barnards Unconditional Exact Test with trial data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="make_two_by_two_by_k_.html">make_two_by_two_by_k_()</a></code> 
+        </dt>
+        <dd>Make 2x2xk contingency tables from summarized adam data. This function is NOT
+generalized</dd>
+      </dl><dl><dt>
+          
+          <code><a href="make_two_by_two_.html">make_two_by_two_()</a></code> 
+        </dt>
+        <dd>Make a two-by-two table</dd>
+      </dl><dl><dt>
+          
+          <code><a href="n_sub_.html">n_sub_()</a></code> 
+        </dt>
+        <dd>Building-block: Number of subjects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="n_event_.html">n_event_()</a></code> 
+        </dt>
+        <dd>Building-block: Number of events (multiple events counted multiple times)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="n_subj_event_.html">n_subj_event_()</a></code> 
+        </dt>
+        <dd>Building-block: Number of subjects with at least one event</dd>
+      </dl><dl><dt>
+          
+          <code><a href="p_subj_event_.html">p_subj_event_()</a></code> 
+        </dt>
+        <dd>Building-block: Proportion of subjects having at least one event</dd>
+      </dl><dl><dt>
+          
+          <code><a href="use_chefStats.html">use_chefStats()</a></code> 
+        </dt>
+        <dd>Make new chefStats functions</dd>
+      </dl></div><div class="section level2">
       <h2 id="misc">Misc<a class="anchor" aria-label="anchor" href="#misc"></a></h2>
       
       <p class="section-desc"></p><p>Non-assigned</p>
@@ -152,20 +216,9 @@
         <dd>Wrapper to prepare data for Hedges G</dd>
       </dl><dl><dt>
           
-          <code><a href="make_two_by_two_by_k.html">make_two_by_two_by_k()</a></code> 
-        </dt>
-        <dd>Make 2x2xk contingency tables from summarized adam data. This function is NOT
-generalized</dd>
-      </dl><dl><dt>
-          
           <code><a href="mean_value.html">mean_value()</a></code> <code><a href="mean_value.html">mean_value()</a></code> 
         </dt>
-        <dd>Calculate percentage of subjects with events</dd>
-      </dl><dl><dt>
-          
-          <code><a href="mk_two_by_two.html">mk_two_by_two()</a></code> 
-        </dt>
-        <dd>Make a two-by-two table</dd>
+        <dd>Calculate mean value</dd>
       </dl><dl><dt>
           
           <code><a href="n_event_100y.html">n_event_100y()</a></code> 
@@ -186,11 +239,6 @@ generalized</dd>
           <code><a href="sd_value.html">sd_value()</a></code> 
         </dt>
         <dd>Standard deviation</dd>
-      </dl><dl><dt>
-          
-          <code><a href="use_chefStats.html">use_chefStats()</a></code> 
-        </dt>
-        <dd>Make new chefStats functions</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
