@@ -42,10 +42,10 @@ test_that("Demographics (categorical) work when strata is provided", {
                b[(missing_sex), N])
 
   expect_snapshot_value(as.data.frame(actual_total),
-                        tolerance = 1e-6, style = "json2")
+                        tolerance = 1e-8, style = "json2")
 
   expect_snapshot_value(as.data.frame(actual_f),
-                        tolerance = 1e-6, style = "json2")
+                        tolerance = 1e-8, style = "json2")
 
 })
 
