@@ -1,4 +1,5 @@
-test_that("Demographics (categorical) work when strata provided", {
+test_that("Demographics (categorical) work when strata is provided", {
+
   # SETUP -------------------------------------------------------------------
   input <- mk_advs()
   input[, INDEX_ := .I] |> setkey(INDEX_)
@@ -27,7 +28,6 @@ test_that("Demographics (categorical) work when strata provided", {
     strata_var = "SEX"
   )
 
-
   # EXPECT ------------------------------------------------------------------
 
   x <- mk_advs()
@@ -36,15 +36,21 @@ test_that("Demographics (categorical) work when strata provided", {
   x[, missing_sex := FALSE]
   x[is.na(SEX), missing_sex := TRUE]
   b <-
-    x[TRT01A=="Placebo", .N, by = .(missing_sex, SEX)] |> setorder(SEX)
+    x[TRT01A == "Placebo", .N, by = .(missing_sex, SEX)] |> setorder(SEX)
 
-  expect_equal(actual_total[qualifiers=="SEX" & label=="n_missing", value], b[(missing_sex), N])
-  expect_snapshot(actual_total)
-  expect_snapshot(actual_f)
+  expect_equal(actual_total[qualifiers == "SEX" & label == "n_missing", value],
+               b[(missing_sex), N])
+
+  expect_snapshot_value(as.data.frame(actual_total),
+                        tolerance = 1e-8, style = "json2")
+
+  expect_snapshot_value(as.data.frame(actual_f),
+                        tolerance = 1e-8, style = "json2")
+
 })
 
 
-test_that("Demographics (continuous) work when no strata level provided", {
+test_that("Demographics (continuous) work when no strata level is provided", {
   # SETUP -------------------------------------------------------------------
   ep <- chef::mk_endpoint_str(
     data_prepare = mk_advs,

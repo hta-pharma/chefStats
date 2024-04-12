@@ -21,7 +21,7 @@ library(data.table)
 library(kableExtra)
 ```
 
-To add new functions to chefStats, you follow three general steps:
+To add new functions to chefStats, you follow four general steps:
 
 
   1. Consider what type of function you need: `stat_by_strata_by_trt`, `stat_by_strata_across_trt` or `stat_across_strata_across_trt` (see article [Function types](https://hta-pharma.github.io/chefStats/articles/function_types.html).
@@ -39,28 +39,26 @@ This is the workflow for writing such a function from scratch:
   1. Decide which function type it is (see article [Function types](https://hta-pharma.github.io/chefStats/articles/function_types.html). Since the function produces a number by stratification level and by treatment level, this will be a `stat_by_strata_by_trt`. 
   2. Call `use_chefStats(fn_name = "num_subj_events", fn_type = "stat_by_strata_by_trt")`. This will produce a template R function that has the correct arguments for what is passed by the chef pipeline to `stat_by_strata_by_trt`-type functions (see section [Interface with chef](#interface-with-chef) for more details. The skeleton function will look like this:
 ```{r, eval=FALSE}
-    num_subj_events <- function(dat,
-                event_index,
-                cell_index,
-                strata_var,
-                strata_val,
-                treatment_var,
-                treatment_val,
-                subject_id,
-                ...) {
-  
-    # Function body here:
-  
-    # The final object retuned needs to be a data.table with the following format:
-    return(
-      data.table::data.table(
-        label = NA_character_,
-        value = NA_real_,
-        description = NA_character_
-      )
+num_subj_events <- function(dat,
+                            event_index,
+                            cell_index,
+                            strata_var,
+                            strata_val,
+                            treatment_var,
+                            treatment_val,
+                            subject_id,
+                            ...) {
+  # Function body here:
+
+  # The final object retuned needs to be a data.table with the following format:
+  return(
+    data.table::data.table(
+      label = NA_character_,
+      value = NA_real_,
+      description = NA_character_
     )
-  }
-  
+  )
+}
 ```
   
   3. Remove unneeded arguments. For our specific function, we only need the following variables:
@@ -73,31 +71,30 @@ This is the workflow for writing such a function from scratch:
   3. Modify the function definition for our needs. The final function definition might look like this:
   
 ```{r, eval=FALSE}
-  num_subj_events <-
+num_subj_events <-
   function(dat,
            event_index,
            cell_index,
            subjectid_var,
-           ... 
-           ) {
+           ...) {
     # Please see the "Interface with chef" section for details on what
     # `event_index` and `cell_index`
-    
+
     # `intersect()` provides us with a vector of rows in `dat` that match both
     # `event_index` and `cell_index` - aka records that were BOTH eligible to
     # have the event (`cell_index`) AND had the event (`event_index`)
     index <- intersect(event_index, cell_index)
-    
+
     # Return all matching rows in `dat` where `INDEX_`
     # matches `index`.
     event_rows <- dat[INDEX_ %in% index]
-    
+
     # `dat` contains event data, meaning subjects can appear more than once if
     # they have >1 event, so we need to remove these extra rows to get a proper
     # count
     event_rows_unique_by_subject <- unique(event_rows, by = subjectid_var)
-    
-    stat <-   NROW(event_rows_unique_by_subject)
+
+    stat <- NROW(event_rows_unique_by_subject)
 
     # The return object has to be a data.table object with the following 3
     # columns. The `value` column always has to be a double (not an integer)
@@ -108,10 +105,7 @@ This is the workflow for writing such a function from scratch:
         value = as.double(stat)
       )
     )
-
   }
-
-
 ```
   
 <style>
@@ -148,11 +142,13 @@ dt <-
     )
   )
 dt |>
-  kable(format = "html",
-        table.attr = "class='table table-bordered'",
-        caption = "Arguments always passed to chefStats functions") |>
+  kable(
+    format = "html",
+    table.attr = "class='table table-bordered'",
+    caption = "Arguments always passed to chefStats functions"
+  ) |>
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
-   row_spec(0, background = "#2C3E50", color="white")
+  row_spec(0, background = "#2C3E50", color = "white")
 ```
 
 <br><br>
@@ -176,11 +172,13 @@ dt <-
     )
   )
 dt |>
-  kable(format = "html",
-        table.attr = "class='table table-bordered'",
-        caption = "Additional arguments passed to by_strata_by_trt functions") |>
+  kable(
+    format = "html",
+    table.attr = "class='table table-bordered'",
+    caption = "Additional arguments passed to by_strata_by_trt functions"
+  ) |>
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
-   row_spec(0, background = "#2C3E50", color="white")
+  row_spec(0, background = "#2C3E50", color = "white")
 ```
 
 
@@ -190,9 +188,11 @@ dt |>
 ```{r, echo=FALSE}
 dt <-
   data.table::data.table(
-    `Argument Names` = c("`cell_index`",
-                         "`strata_val`",
-                         "`treatment_refval`"),
+    `Argument Names` = c(
+      "`cell_index`",
+      "`strata_val`",
+      "`treatment_refval`"
+    ),
     Description = c(
       "A `vector` of indicies specifying which rows in `dat` are considered to be part of the analysis for the given strata level and treatment level under evaluation. For example, if the current instance of the function was analysis \"Number of Events\" for SEX==\"M\" and TRT01A == \"Placebo\", then `cell_index` would be a vector of records in `dat$INDEX_` that match those parameters. You can thus obtain the analysis set by filtering `dat` via: `dat[cell_index %in% INDEX_]`",
       "A `character` specifying the stratification level under evaluation. For example if `strat_var ==\"SEX\"`, then `strat_val` could be either `\"M\"` or `\"F\"`",
@@ -200,11 +200,13 @@ dt <-
     )
   )
 dt |>
-  kable(format = "html",
-        table.attr = "class='table table-bordered'",
-        caption = "Additional arguments passed to by_strata_across_trt functions") |>
+  kable(
+    format = "html",
+    table.attr = "class='table table-bordered'",
+    caption = "Additional arguments passed to by_strata_across_trt functions"
+  ) |>
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
-   row_spec(0, background = "#2C3E50", color="white")
+  row_spec(0, background = "#2C3E50", color = "white")
 ```
 #### stat_by_strata_across_trt
 
@@ -212,19 +214,23 @@ dt |>
 ```{r, echo=FALSE}
 dt <-
   data.table::data.table(
-    `Argument Names` = c("`strata_val`",
-                         "`treatment_refval`"),
+    `Argument Names` = c(
+      "`strata_val`",
+      "`treatment_refval`"
+    ),
     Description = c(
       "A `character` specifying the stratification level under evaluation. For example if `strat_var ==\"SEX\"`, then `strat_val` could be either `\"M\"` or `\"F\"`",
       "A `character` specifying the treatment reference level. *Not to be confused with the `treatment_val` that specifies the treatment value for `by_strata_by_trt` functions"
     )
   )
 dt |>
-  kable(format = "html",
-        table.attr = "class='table table-bordered'",
-        caption = "Additional arguments passed to across_strata_across_trt functions") |>
+  kable(
+    format = "html",
+    table.attr = "class='table table-bordered'",
+    caption = "Additional arguments passed to across_strata_across_trt functions"
+  ) |>
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive")) |>
-   row_spec(0, background = "#2C3E50", color="white")
+  row_spec(0, background = "#2C3E50", color = "white")
 ```
 
 
