@@ -11,7 +11,7 @@
 #' @return An integer
 #' @export
 #' 
-n_sub_ <-
+n_subj_ <-
   function(dat,
            cell_index,
            subjectid_var) {
@@ -72,7 +72,7 @@ p_subj_event_ <-
            cell_index,
            intersect_index,
            subjectid_var) {
-    n_sub <- n_sub_(dat, cell_index = cell_index,subjectid_var = subjectid_var)
+    n_sub <- n_subj_(dat, cell_index = cell_index,subjectid_var = subjectid_var)
     
     # If there are no subjects, no need for further calculations
     if (n_sub == 0) {

@@ -18,7 +18,7 @@ n_subj <- function(dat,
                    subjectid_var,
                    ...) {
   stat <-
-    n_sub_(dat = dat,
+    n_subj_(dat = dat,
            cell_index = cell_index,
            subjectid_var = subjectid_var)
   
@@ -176,8 +176,6 @@ p_subj_event <-
 #' @param ... Optional parameters.
 #' @return a data.table containing all statistical outputs
 #' @export
-#'
-#' @examples
 count_set <- function(dat,
                    event_index,
                    cell_index,
@@ -185,7 +183,7 @@ count_set <- function(dat,
                    ...) {
   intersect_index <- intersect(event_index, cell_index)
   n_subjects <-
-    n_sub_(dat = dat,
+    n_subj_(dat = dat,
            cell_index = cell_index,
            subjectid_var = subjectid_var)
   n_events <- n_event_(dat = dat, intersect_index = intersect_index)
