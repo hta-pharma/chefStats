@@ -15,11 +15,7 @@
 #' @export
 #'
 #' @examples
-{
-  {
-    fn_name
-  }
-} <- function(dat,
+{{fn_name}} <- function(dat,
               event_index,
               cell_index,
               strata_var,

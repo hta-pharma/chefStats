@@ -1,6 +1,13 @@
 url: https://hta-pharma.github.io/chefStats/
 template:
   bootstrap: 5
+  bootswatch: flatly
+
+navbar:
+  structure:
+    left: [intro, articles, reference, news]
+    right: [github]
+
 reference:
 - title: By strata and treatment level
   desc: |
@@ -10,6 +17,7 @@ reference:
   - n_event
   - n_subj_event
   - p_subj_event
+  - count_set
   - count_set
 - title: By strata, across treatment levels
   desc: |
@@ -31,7 +39,7 @@ reference:
   - barnard_test_
   - make_two_by_two_by_k_
   - make_two_by_two_
-  - n_sub_
+  - n_subj_
   - n_event_
   - n_subj_event_
   - p_subj_event_

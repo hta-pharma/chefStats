@@ -2,22 +2,22 @@ Package: chefStats
 Title: Provide methods for different statistics
 Version: 0.1.1
 Authors@R:
-    c(person(given = "MEWP (Matthew Phelps)",
+    c(person(given = "Matthew David Phelps",
              role = "aut",
              email = "mewp@novonordisk.com"),
-      person(given = "NOSJ (Nicolai Skov Johnsen)",
+      person(given = "Nicolai Skov Johnsen",
              role = "aut",
              email = "nosj@novonordisk.com"),
-      person(given = "HSPU (Henrik Sparre Spiegelhauer)",
+      person(given = "Henrik Sparre Spiegelhauer",
              role = "aut",
              email = "hspu@novonordisk.com"),       
       person(given = "ABIU (Anders Bilgrau)",
              role = "aut",
              email = "abiu@novonordisk.com"),
-      person(given = "SCQY (scqy)",
+      person(given = "Simon Clancy",
              role = "aut",
              email = "scqy@novonordisk.com"),
-      person(given = "CINO (Christian Haargaard Olsen)",
+      person(given = "Christian Haargaard Olsen",
              role = c("aut", "cre"),
              email = "cino@novonordisk.com"),
       person(given = "Novo Nordisk A/S",
@@ -28,7 +28,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
-Suggests: 
+Suggests:
+    testr,
     covr,
     pkgdown,
     testthat,
@@ -48,10 +49,12 @@ Imports:
     cli,
     usethis
 Remotes:
-    hta-pharma/chef
+    hta-pharma/chef,
+    matthew-phelps/testr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/testthat/parallel: true
 URL: 
        https://hta-pharma.github.io/chefStats/,
+       https://github.com/hta-pharma/chefStats,
        https://app.codecov.io/github/hta-pharma/chefStats
