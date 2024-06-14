@@ -23,7 +23,6 @@ p_val_interaction <- function(dat,
                               odds_ratio = NA,
                               correct = FALSE,
                               ...) {
-
   two_by_two_by_k <-
     make_two_by_two_by_k_(
       dat = dat,
