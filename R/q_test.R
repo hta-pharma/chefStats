@@ -6,8 +6,6 @@
 #' @param treatment_refval 
 #' @param subjectid_var 
 #' @param strata_var 
-#' @param odds_ratio 
-#' @param correct 
 #' @param ... 
 #'
 #' @return
@@ -21,12 +19,10 @@ Q_test <-
             treatment_refval,
             subjectid_var,
             strata_var,
-            odds_ratio = NA,
-            correct = FALSE,
             ...)
   {
     #Remove the missing subgroup levels
-    dat[get(strata_var)!="" & !is.na(get(strata_var))]
+    dat <- dat[get(strata_var)!="" & !is.na(get(strata_var))]
     # dat <-
     #   dat %>% filter(eval(parse(text = strata_var)) != "" &
     #                    !is.na(eval(parse(text = strata_var))))
