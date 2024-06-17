@@ -12,19 +12,21 @@
 #'
 #'  Only observations that have a Treatment value recorded are returned.
 
-#' @param dat data.table. The analysis data set.
-#' @param event_index vector of integers that index the rows in `dat` that match
-#'   the definition of an 'event'. Matching is done via the `INDEX_` column in
-#'   `dat`.
-#' @param cell_index A vector of integers referencing the rows of `dat` (as
-#'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
-#'   for more information.
-#' @param treatment_var character. The name of the treatment variable in `dat`.
-#' @param treatment_refval character. The reference value of the treatment variable in `dat`.
-#' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
+#'@param dat data.table. The analysis data set.
+#'@param event_index vector of integers that index the rows in `dat` that match
+#'  the definition of an 'event'. Matching is done via the `INDEX_` column in
+#'  `dat`.
+#'@param cell_index A vector of integers referencing the rows of `dat` (as
+#'  specified by the `INDEX_` column in `dat`) that match the population to be
+#'  analyzed. See the "Endpoint Events" vignette in {ramnog} for more
+#'  information.
+#'@param treatment_var character. The name of the treatment variable in `dat`.
+#'@param treatment_refval character. The reference value of the treatment
+#'  variable in `dat`.
+#'@param subjectid_var character. Name of the subject identifier variable in
+#'  `dat` (default is "USUBJID").
 #'@return A matrix
-#' @export
+#'@export
 #'
 make_two_by_two_ <-
   function(dat,
@@ -120,16 +122,21 @@ ensure_complete_two_by_two <- function(two_by_two_long, treatment_var) {
   out[]
 }
 
-#' Make 2x2xk contingency tables from summarized adam data. This function is NOT
+#' Make 2x2xk contingency tables from summarized ADaM data. This function is NOT
 #' generalized
 #'
 #'
 #' @param dat data.table. The analysis data set.
-#' @param event_index vector of integers that index the rows in `dat` that match the definition of an 'event'. Matching is done via the `INDEX_` column in `dat`.
-#' @param strata_var character. Variable in `dat` to stratify by specific for this call.
+#' @param event_index vector of integers that index the rows in `dat` that match
+#'   the definition of an 'event'. Matching is done via the `INDEX_` column in
+#'   `dat`.
+#' @param strata_var character. Variable in `dat` to stratify by specific for
+#'   this call.
 #' @param treatment_var character. The name of the treatment variable in `dat`.
-#' @param treatment_refval character. The reference value of the treatment variable in `dat`.
-#' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
+#' @param treatment_refval character. The reference value of the treatment
+#'   variable in `dat`.
+#' @param subjectid_var character. Name of the subject identifier variable in
+#'   `dat` (default is "USUBJID").
 #' @return A two-by-two-by-k array where k represents the number of subgroups
 #'   (strata).
 #' @export
