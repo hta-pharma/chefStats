@@ -5,11 +5,11 @@
 #'   calculates the test statistic and p-value for the interaction.
 #'
 #'   The test is only valid under the following conditions:
-#' - The data must contain records in each strata level (defined by `strata_var`).
 #' - The `strata_var` variable should define exactly two stratification levels.
+#' - The data must contain records in each stratification level.
 #' - Each stratification level should have at least one event.
-#' - The product of the sums of events and non-events across treatment groups 
-#' within each subgroup should not be zero.
+#' - The product of the sums of events and non-events across treatment groups
+#'   within each subgroup should not be zero.
 #'
 #' @param dat A data frame containing the study data.
 #' @param event_index The name of the column in 'dat' that indicates whether the
@@ -25,7 +25,9 @@
 #' @param ...
 #'
 #' @return A data.table containing the label, description, qualifiers, and
-#'   p-value of the Cochran's Q test for interaction.
+#'   p-value of the Cochran's Q test for interaction. If the conditions
+#'   describet in the "Description" section are not met, a NA value will be
+#'   returned instead of a p-value.
 #' @export
 #' @export
 #'
