@@ -7,8 +7,6 @@
 #' @return A vector with three values statistic - Breslow and Day test
 #'   statistic pval - p value evtl. based on the Tarone test statistic using a
 #'    \eqn{\chi^2(K-1)} distribution
-library(DescTools)
-library(testthat)
 breslowdaytest_ <- function(x, odds_ratio = NA, correct = FALSE) {
 
     # Call the BreslowDayTest from the DescTools package
