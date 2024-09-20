@@ -23,8 +23,9 @@
 #' @param treatment_var character. The name of the treatment variable in `dat`.
 #' @param treatment_refval character. The reference value of the treatment variable in `dat`.
 #' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
-#'@return A matrix
+#' @return A matrix
 #' @export
+#' @importFrom magrittr %>%
 #'
 make_two_by_two_ <-
   function(dat,
@@ -33,6 +34,8 @@ make_two_by_two_ <-
            treatment_var,
            treatment_refval,
            subjectid_var) {
+    N <- is_cell <- is_event <- INDEX_ <- treatment <- NULL
+    
     dat_ <- copy(dat)
     n_trt_levels <-
       dat[, unique(dat, by = treatment_var)][[treatment_var]] |>
@@ -103,6 +106,7 @@ make_two_by_two_ <-
 #' @return data.table of 2x2 table in long format
 #' @noRd
 ensure_complete_two_by_two <- function(two_by_two_long, treatment_var) {
+  is_cell <- N <- NULL
   n_rows_two_by_two_long <-
     two_by_two_long[(is_cell), .N, by = c("is_event", treatment_var)] |> NROW()
 

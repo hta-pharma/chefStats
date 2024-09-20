@@ -37,6 +37,9 @@ expected <- as.matrix(cbind(yes_counts[,.(N)], no_counts[,.(N)]))
 rownames(expected) <- no_counts$TRT01A
 colnames(expected) <- c("outcome_YES", "outcome_NO")
 
+# With data.table 1.16, attributes are preserved in a different way, so strip
+# these for testing.
+attr(dimnames(expected)[[1]], "label") <- NULL
 
 expect_identical(actual, expected)
 })

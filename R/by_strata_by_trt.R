@@ -247,8 +247,8 @@ demographics_continuous <- function(dat,
   stat <- dat_cell[,
                    .(
                      mean = mean(get(var), na.rm = TRUE),
-                     median = median(get(var), na.rm = TRUE),
-                     sd = sd(get(var), na.rm = TRUE),
+                     median = stats::median(get(var), na.rm = TRUE),
+                     sd = stats::sd(get(var), na.rm = TRUE),
                      min = min(get(var), na.rm = TRUE),
                      max = max(get(var), na.rm = TRUE),
                      n_non_missing = sum(!is.na(get(var))),
@@ -580,7 +580,7 @@ sd_value <- function(dat,
     unique(by = c(subjectid_var))
   
   stat <- dat_cell[[var]] |>
-    sd()
+    stats::sd()
   
   return(
     data.table(
