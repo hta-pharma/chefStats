@@ -47,7 +47,8 @@ Imports:
     magrittr,
     checkmate,
     cli,
-    usethis
+    usethis,
+	DescTools
 Remotes:
     hta-pharma/chef,
     matthew-phelps/testr
