@@ -29,7 +29,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Suggests:
-    testr,
     covr,
     pkgdown,
     testthat,
@@ -39,7 +38,8 @@ Suggests:
     pharmaverseadam,
     tidyr,
     purrr,
-    kableExtra
+    kableExtra,
+    withr
 Imports:
     Barnard,
     stats,
@@ -48,10 +48,7 @@ Imports:
     checkmate,
     cli,
     usethis,
-	DescTools
-Remotes:
-    hta-pharma/chef,
-    matthew-phelps/testr
+    DescTools
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/testthat/parallel: true
