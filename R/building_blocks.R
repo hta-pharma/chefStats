@@ -10,7 +10,14 @@
 #'
 #' @return An integer
 #' @export
-#' 
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3"),
+#'   VALUE   = c(1.1, 2.2, 3.3)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_subj_(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
 n_subj_ <-
   function(dat,
            cell_index,
@@ -28,7 +35,11 @@ n_subj_ <-
 #'
 #' @return an integer value
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_event_(dat, intersect_index = c(1L, 2L))
 n_event_ <- function(dat, intersect_index) {
   dat[list(intersect_index)] |>
     NROW()
@@ -46,7 +57,11 @@ n_event_ <- function(dat, intersect_index) {
 #'
 #' @return an interger value
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_subj_event_(dat, intersect_index = c(1L, 2L), subjectid_var = "USUBJID")
 n_subj_event_ <- function(dat, intersect_index, subjectid_var) {
   dat[list(intersect_index)] |>
     data.table::uniqueN(by = subjectid_var)
@@ -66,7 +81,13 @@ n_subj_event_ <- function(dat, intersect_index, subjectid_var) {
 #'   the data (default is "USUBJID").
 #'
 #' @return an integer value
-#' @export 
+#' @export
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_subj_event_(dat, cell_index = 1:3, intersect_index = c(1L, 2L),
+#'               subjectid_var = "USUBJID")
 p_subj_event_ <-
   function(dat,
            cell_index,

@@ -48,3 +48,15 @@ criteria of each 2x2 cell.
 
 Only observations that have a Treatment value recorded are returned.
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+  TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+make_two_by_two_(dat, event_index = c(1L, 2L, 4L),
+                 cell_index = dat[["INDEX_"]],
+                 treatment_var = "TRT", treatment_refval = "Placebo",
+                 subjectid_var = "USUBJID")
+}

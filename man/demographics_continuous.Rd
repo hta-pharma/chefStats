@@ -30,3 +30,14 @@ A data.table containing the summary statistics for the given continuous variable
 \description{
 Calculate a set of summary statistics (mean, median, sd, min, max, n_non_missing, n_missing) on a continuous variable for demographics endpoints.
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4"),
+  AGE     = c(45, 52, 60, 38)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+demographics_continuous(dat, event_index = dat[["INDEX_"]],
+                        cell_index = dat[["INDEX_"]],
+                        subjectid_var = "USUBJID", var = "AGE")
+}

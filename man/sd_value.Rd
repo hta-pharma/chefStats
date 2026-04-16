@@ -30,3 +30,13 @@ A data.table containing the standard deviation.
 \description{
 Standard deviation
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3"),
+  AVAL    = c(1.5, 2.5, 3.5)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+sd_value(dat, event_index = dat[["INDEX_"]], cell_index = dat[["INDEX_"]],
+         subjectid_var = "USUBJID", var = "AVAL")
+}

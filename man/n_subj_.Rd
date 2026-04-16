@@ -23,3 +23,12 @@ An integer
 \description{
 Building-block: Number of subjects
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3"),
+  VALUE   = c(1.1, 2.2, 3.3)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_subj_(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
+}

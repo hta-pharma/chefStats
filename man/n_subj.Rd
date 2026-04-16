@@ -24,3 +24,9 @@ A data.table containing the number of subjects for the given combination of trea
 \description{
 Calculate the number of subjects by treatment and stratum.
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_subj(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
+}

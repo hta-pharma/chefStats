@@ -52,3 +52,14 @@ Ensures the input to the statistical function is in the proper
 format, and enruse the output is formated to the need of the AMNOG
 workflow.
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+  TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+p_val(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+      treatment_var = "TRT", treatment_refval = "Placebo",
+      subjectid_var = "USUBJID")
+}

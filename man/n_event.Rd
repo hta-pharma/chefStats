@@ -28,3 +28,10 @@ A data.table containing the number of events for the given combination of treatm
 \description{
 Calculate the number of events by treatment and stratum.
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_event(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+        subjectid_var = "USUBJID")
+}

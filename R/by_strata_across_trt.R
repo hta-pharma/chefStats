@@ -18,6 +18,16 @@
 #' 
 #' @return A data.table containing Relative Risk statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' RR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 RR <- function(dat,
                event_index,
                cell_index,
@@ -75,6 +85,16 @@ RR <- function(dat,
 #'
 #' @return A data.table containing Odds Ratio statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' OR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 OR <- function(dat,
                event_index,
                cell_index,
@@ -134,6 +154,16 @@ OR <- function(dat,
 #'
 #' @return A data.table containing Risk Difference statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' RD(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 RD <- function(dat,
                event_index,
                cell_index,
@@ -196,6 +226,16 @@ RD <- function(dat,
 #' @param ... Optional parameters.  
 #' @return A data.table containing p-value statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_val(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'       treatment_var = "TRT", treatment_refval = "Placebo",
+#'       subjectid_var = "USUBJID")
 p_val <-
   function(dat,
            event_index,

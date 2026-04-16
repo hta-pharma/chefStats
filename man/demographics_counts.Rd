@@ -35,3 +35,15 @@ A data.table containing the summary statistics.
 \description{
 Calculate summary statistics (n_non_missing, n_missing) on a variable for demographics endpoints.
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4"),
+  SEX     = c("M", "F", "M", NA_character_)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+demographics_counts(dat, cell_index = dat[["INDEX_"]],
+                    subjectid_var = "USUBJID",
+                    stratify_by = c("TOTAL_", "SEX"),
+                    strata_var = "SEX")
+}

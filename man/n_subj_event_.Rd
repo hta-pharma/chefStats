@@ -22,3 +22,9 @@ an interger value
 \description{
 Building-block: Number of subjects with at least one event
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_subj_event_(dat, intersect_index = c(1L, 2L), subjectid_var = "USUBJID")
+}

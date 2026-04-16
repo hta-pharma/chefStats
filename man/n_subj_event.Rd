@@ -28,3 +28,10 @@ A data.table containing the number of subjects with events for the given combina
 \description{
 Calculate the number of subjects with events by treatment and stratum.
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_subj_event(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+             subjectid_var = "USUBJID")
+}

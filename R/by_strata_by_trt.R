@@ -13,6 +13,11 @@
 #' @return A data.table containing the number of subjects for the given combination of treatment and stratum.
 #' @export
 #' @import data.table
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_subj(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
 n_subj <- function(dat,
                    cell_index,
                    subjectid_var,
@@ -49,6 +54,12 @@ n_subj <- function(dat,
 #'
 #' @return A data.table containing the number of events for the given combination of treatment and stratum.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_event(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+#'         subjectid_var = "USUBJID")
 n_event <-
   function(dat,
            event_index,
@@ -87,6 +98,12 @@ n_event <-
 #'
 #' @return A data.table containing the number of subjects with events for the given combination of treatment and stratum.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_subj_event(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+#'              subjectid_var = "USUBJID")
 n_subj_event <-
   function(dat,
            event_index,
@@ -127,6 +144,12 @@ n_subj_event <-
 #'
 #' @return A data.table containing the percentage of subjects with events for the given combination of treatment and stratum
 #' @export
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_subj_event(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+#'              subjectid_var = "USUBJID")
 p_subj_event <-
   function(dat,
            event_index,
@@ -176,6 +199,12 @@ p_subj_event <-
 #' @param ... Optional parameters.
 #' @return a data.table containing all statistical outputs
 #' @export
+#' @examples
+#' dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' count_set(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+#'           subjectid_var = "USUBJID")
 count_set <- function(dat,
                    event_index,
                    cell_index,
@@ -232,6 +261,16 @@ count_set <- function(dat,
 #'
 #' @return A data.table containing the summary statistics for the given continuous variable in the analysis data set.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4"),
+#'   AGE     = c(45, 52, 60, 38)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' demographics_continuous(dat, event_index = dat[["INDEX_"]],
+#'                         cell_index = dat[["INDEX_"]],
+#'                         subjectid_var = "USUBJID", var = "AGE")
 demographics_continuous <- function(dat,
                                     event_index,
                                     cell_index,
@@ -282,7 +321,17 @@ demographics_continuous <- function(dat,
 #'
 #' @return A data.table containing the summary statistics.
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4"),
+#'   SEX     = c("M", "F", "M", NA_character_)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' demographics_counts(dat, cell_index = dat[["INDEX_"]],
+#'                     subjectid_var = "USUBJID",
+#'                     stratify_by = c("TOTAL_", "SEX"),
+#'                     strata_var = "SEX")
 demographics_counts <- function(dat,
                                 cell_index,
                                 subjectid_var,
@@ -336,49 +385,6 @@ total_missing_counts <- function(dat_cell, stratify_by) {
   out[]
 }
 
-
-#' Calculate mean value
-#'
-#' @description Calculate the mean value of a variable
-#'
-#' @param dat data.table. The analysis data set.
-#' @param event_index vector of integers that index the rows in `dat` that match
-#'   the definition of an 'event'. Matching is done via the `INDEX_` column in
-#'   `dat`.
-#' @param cell_index A vector of integers referencing the rows of `dat` (as
-#'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
-#'   for more information.
-#' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
-#' @param var character. Name of the variable in the analysis data that is subject to the statistics.
-#' @param ... Optional parameters.
-#'
-#' @return A data.table containing the percentage of subjects with events by treatment.
-#' @export
-#'
-mean_value <- function(dat,
-                       event_index,
-                       cell_index,
-                       subjectid_var,
-                       var,
-                       ...) {
-  intersect_index <- intersect(cell_index, event_index)
-  dat_cell <- dat[J(intersect_index)] |>
-    unique(by = c(subjectid_var))
-  
-  stat <- dat_cell[[var]] |>
-    mean()
-  
-  return(
-    data.table(
-      label = "mean",
-      description = "Summary statistics",
-      qualifiers = var,
-      value = stat
-    )
-  )
-}
-
 #' Calculate percentage of subjects with events
 #'
 #' @description Calculate the percentage of subjects with events by treatment and strata.
@@ -398,6 +404,17 @@ mean_value <- function(dat,
 #'
 #' @return A data.table containing the percentage of subjects with events by treatment.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4"),
+#'   TRT     = c("Active", "Active", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_subj_event_by_trt(dat, event_index = c(1L, 2L),
+#'                     cell_index = dat[TRT == "Active"][["INDEX_"]],
+#'                     subjectid_var = "USUBJID",
+#'                     treatment_var = "TRT", treatment_value = "Active")
 p_subj_event_by_trt <-
   function(dat,
            event_index,
@@ -447,7 +464,14 @@ p_subj_event_by_trt <-
 #'
 #' @return A data.table containing the observation time by treatment.
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID  = c("S1", "S2", "S3"),
+#'   INTRDURY = c(1.5, 2.0, 0.8)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' obs_time_by_trt(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
 obs_time_by_trt <- function(dat,
                             cell_index,
                             subjectid_var,
@@ -485,6 +509,18 @@ obs_time_by_trt <- function(dat,
 #'
 #' @return A data.table containing the number of events per 100 years of exposure.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID  = c("S1", "S2", "S3", "S4"),
+#'   TRT      = c("Active", "Active", "Placebo", "Placebo"),
+#'   INTRDURY = c(1.5, 2.0, 0.8, 1.2)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' n_event_100y(dat, event_index = c(1L, 2L),
+#'              cell_index = dat[TRT == "Active"][["INDEX_"]],
+#'              subjectid_var = "USUBJID",
+#'              treatment_var = "TRT", treatment_value = "Active")
 n_event_100y <- function(dat,
                          event_index,
                          cell_index,
@@ -529,7 +565,15 @@ n_event_100y <- function(dat,
 #'
 #' @return A data.table containing the mean value.
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3"),
+#'   AVAL    = c(1.5, 2.5, 3.5)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' mean_value(dat, event_index = dat[["INDEX_"]], cell_index = dat[["INDEX_"]],
+#'            subjectid_var = "USUBJID", var = "AVAL")
 mean_value <- function(dat,
                        event_index,
                        cell_index,
@@ -568,7 +612,15 @@ mean_value <- function(dat,
 #'
 #' @return A data.table containing the standard deviation.
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3"),
+#'   AVAL    = c(1.5, 2.5, 3.5)
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' sd_value(dat, event_index = dat[["INDEX_"]], cell_index = dat[["INDEX_"]],
+#'          subjectid_var = "USUBJID", var = "AVAL")
 sd_value <- function(dat,
                      event_index,
                      cell_index,

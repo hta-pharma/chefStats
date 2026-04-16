@@ -5,8 +5,6 @@
 \title{Calculate mean value}
 \usage{
 mean_value(dat, event_index, cell_index, subjectid_var, var, ...)
-
-mean_value(dat, event_index, cell_index, subjectid_var, var, ...)
 }
 \arguments{
 \item{dat}{data.table. The analysis data set.}
@@ -27,10 +25,18 @@ for more information.}
 \item{...}{Optional parameters.}
 }
 \value{
-A data.table containing the percentage of subjects with events by treatment.
-
 A data.table containing the mean value.
 }
 \description{
 Calculate the mean value of a variable
+}
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3"),
+  AVAL    = c(1.5, 2.5, 3.5)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+mean_value(dat, event_index = dat[["INDEX_"]], cell_index = dat[["INDEX_"]],
+           subjectid_var = "USUBJID", var = "AVAL")
 }

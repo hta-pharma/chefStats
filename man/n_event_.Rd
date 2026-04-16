@@ -19,3 +19,9 @@ an integer value
 \description{
 Building-block: Number of events (multiple events counted multiple times)
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_event_(dat, intersect_index = c(1L, 2L))
+}

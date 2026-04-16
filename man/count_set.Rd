@@ -33,3 +33,10 @@ function will produce all the described functions. This can be useful to
 save compute time as inside the chef pipeline there will be fewer
 iterations.
 }
+\examples{
+dat <- data.table::data.table(USUBJID = c("S1", "S2", "S3", "S4"))
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+count_set(dat, event_index = c(1L, 2L), cell_index = dat[["INDEX_"]],
+          subjectid_var = "USUBJID")
+}
