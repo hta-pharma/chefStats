@@ -22,3 +22,4 @@ error (default), or return an NA (safe_mode = FALSE)}
 \description{
 Barnards Unconditional Exact Test with trial data
 }
+\keyword{internal}
