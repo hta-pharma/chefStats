@@ -1,5 +1,5 @@
 Package: chefStats
-Title: Provide methods for different statistics
+Title: Provide Methods for Different Statistics
 Version: 0.1.1
 Authors@R:
     c(person(given = "Matthew David Phelps",
@@ -22,9 +22,13 @@ Authors@R:
              email = "cino@novonordisk.com"),
       person(given = "Novo Nordisk A/S",
              role = "cph"))
-Maintainer: Christian Haargaard Olsen <cino@novonordisk.com>
-Description: Provide a library of methods that can be used to calculate different statistics.
+Description: Provides a library of statistical methods for use in clinical trial evidence
+    generation workflows. Functions cover subject counts, event rates, odds ratios,
+    relative risks, risk differences, p-values, and demographic summaries, all
+    formatted for use with the 'chef' pipeline framework. Designed to support
+    healthcare technology assessments such as AMNOG dossier submissions.
 License: MIT + file LICENSE
+BugReports: https://github.com/hta-pharma/chefStats/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
@@ -52,7 +56,5 @@ Imports:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/testthat/parallel: true
-URL: 
-       https://hta-pharma.github.io/chefStats/,
-       https://github.com/hta-pharma/chefStats,
-       https://app.codecov.io/github/hta-pharma/chefStats
+URL: https://hta-pharma.github.io/chefStats/,
+    https://github.com/hta-pharma/chefStats
