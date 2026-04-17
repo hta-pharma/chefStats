@@ -9,7 +9,7 @@
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -76,7 +76,7 @@ RR <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -144,7 +144,7 @@ OR <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -214,7 +214,7 @@ RD <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param safe_mode Boolean determing if the function should fail when given
 #'   input that cannot be calculated (`safe_mode = TRUE`), or if it should silently return a `NA` value (default).

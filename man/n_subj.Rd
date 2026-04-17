@@ -11,7 +11,7 @@ n_subj(dat, cell_index, subjectid_var, ...)
 
 \item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
 specified by the \code{INDEX_} column in \code{dat}) that match the population to be
-analyzed. See the "Endpoint Events" vignette in {ramnog}
+analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 for more information.}
 
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}

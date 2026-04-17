@@ -18,7 +18,7 @@
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in `dat`.
 #' @param treatment_refval character. The reference value of the treatment variable in `dat`.

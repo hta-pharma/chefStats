@@ -2,7 +2,7 @@
 #'
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog} for more
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog} for more
 #'   information.
 #' @param subjectid_var character. Name of the subject identifier variable in
 #'   the data (default is "USUBJID").
@@ -72,7 +72,7 @@ n_subj_event_ <- function(dat, intersect_index, subjectid_var) {
 #' @param dat data.table. The analysis data set.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog} for more
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog} for more
 #'   information.
 #' @param intersect_index A vector of intergers referencing the rows of `dat`
 #'   that match both (1) the population to be analyzed and (2) the defenition of

@@ -5,7 +5,7 @@
 #' @param dat data.table. The analysis data set.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -47,7 +47,7 @@ n_subj <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -91,7 +91,7 @@ n_event <-
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -137,7 +137,7 @@ n_subj_event <-
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -193,7 +193,7 @@ p_subj_event <-
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -253,7 +253,7 @@ count_set <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param var character. Name of the variable in the analysis data that is subject to the statistics.
@@ -312,7 +312,7 @@ demographics_continuous <- function(dat,
 #' @param dat data.table. The analysis data set.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param stratify_by character vector. Set of variables in the analysis data to stratify by.
@@ -395,7 +395,7 @@ total_missing_counts <- function(dat_cell, stratify_by) {
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param treatment_var character. Name of the treatment variable in the data.
@@ -457,7 +457,7 @@ p_subj_event_by_trt <-
 #' @param dat data.table. The analysis data set.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param ... Optional parameters.
@@ -500,7 +500,7 @@ obs_time_by_trt <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param treatment_var character. Name of the treatment variable in the data.
@@ -557,7 +557,7 @@ n_event_100y <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param var character. Name of the variable in the analysis data that is subject to the statistics.
@@ -604,7 +604,7 @@ mean_value <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param subjectid_var character. Name of the subject identifier variable in the data (default is "USUBJID").
 #' @param var Character. Name of the variable in the analysis data that is subject to the statistics.

@@ -11,7 +11,7 @@ p_subj_event_(dat, cell_index, intersect_index, subjectid_var)
 
 \item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
 specified by the \code{INDEX_} column in \code{dat}) that match the population to be
-analyzed. See the "Endpoint Events" vignette in {ramnog} for more
+analyzed. See the "Endpoint Events" vignette in \pkg{ramnog} for more
 information.}
 
 \item{intersect_index}{A vector of intergers referencing the rows of \code{dat}
