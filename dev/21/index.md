@@ -1,0 +1,35 @@
+# chefStats
+
+A library of statistical methods for chef-style AMNOG analyses
+
+# Aim
+
+The {chefStats} package aims to provide a library of fast, validated
+methods for use in AMNOG analysis created by the chef package.
+
+As the functions found in chefStats are designed to be used with
+[chef](https://hta-pharma.github.io/chef/) in the context of the
+[ramnog](https://hta-pharma.github.io/ramnog/) framework, it may be
+unwieldy to use these functions independently.
+
+# Installation
+
+The package is available to install from GitHub:
+
+``` r
+
+remotes::install_github("hta-pharma/chefStats")
+```
+
+# How to contribute
+
+For information on how to contribute, please refer to [ramnog
+contributing
+documentation](https://hta-pharma.github.io/ramnog/articles/dev_contribute).
+
+# More information
+
+These site focuses on the functions of chefStats. For more context on
+how these functions should be utilized to produce an AMNOG-like
+analysis, please see the [ramnog](https://hta-pharma.github.io/ramnog/)
+documentation.

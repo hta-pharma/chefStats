@@ -1,0 +1,4 @@
+# License
+
+    YEAR: 2024
+    COPYRIGHT HOLDER: 2024 Novo Nordisk A/S, Danish company registration no. 24256790
