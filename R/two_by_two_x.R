@@ -25,7 +25,6 @@
 #' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
 #' @return A matrix
 #' @export
-#' @importFrom magrittr %>%
 #' @examples
 #' dat <- data.table::data.table(
 #'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),

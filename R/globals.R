@@ -2,8 +2,6 @@
 utils::globalVariables(
   c(
     ":=",
-    "%>%",
-    ".",
     ".SD",
     ".I",
     "..keep",
