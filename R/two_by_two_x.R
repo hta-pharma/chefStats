@@ -44,7 +44,7 @@ make_two_by_two_ <-
            treatment_refval,
            subjectid_var) {
     N <- is_cell <- is_event <- INDEX_ <- treatment <- NULL
-    
+
     dat_ <- copy(dat)
     n_trt_levels <-
       dat[, unique(dat, by = treatment_var)][[treatment_var]] |>
@@ -68,9 +68,9 @@ make_two_by_two_ <-
 
     # We don't want to know how many times each subject had an event, only if
     # they had one or not.
-    dat_unique <-
-      unique(dat_, by = subjectid_var) |>
-      data.table::setkeyv(c("is_event", "is_cell", treatment_var))
+dat_unique <-
+    unique(dat_, by = c(subjectid_var, treatment_var)) |>
+    data.table::setkeyv(c("is_event", "is_cell", treatment_var))
 
     # CJ() allows us to aggregate while keeping the 0s
     two_by_two_long <-
