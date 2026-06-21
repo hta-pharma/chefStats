@@ -24,12 +24,12 @@ Source:
 Matthew David Phelps, Nicolai Skov Johnsen, Henrik Sparre Spiegelhauer,
 ABIU (Anders Bilgrau), Simon Clancy, Christian Haargaard Olsen (2026).
 *chefStats: Provide Methods for Different Statistics*. R package version
-0.1.1, <https://hta-pharma.github.io/chefStats/>.
+0.2.0, <https://hta-pharma.github.io/chefStats/>.
 
     @Manual{,
       title = {chefStats: Provide Methods for Different Statistics},
       author = {{Matthew David Phelps} and {Nicolai Skov Johnsen} and {Henrik Sparre Spiegelhauer} and {ABIU (Anders Bilgrau)} and {Simon Clancy} and {Christian Haargaard Olsen}},
       year = {2026},
-      note = {R package version 0.1.1},
+      note = {R package version 0.2.0},
       url = {https://hta-pharma.github.io/chefStats/},
     }

@@ -79,8 +79,8 @@ OR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
    subjectid_var = "USUBJID")
 #>     label                   description qualifiers       value
 #>    <char>                        <char>     <char>       <num>
-#> 1:     OR                    Odds Ratio       <NA> 0.250000000
-#> 2:     SE     Odds Ratio standard error       <NA> 1.732050808
-#> 3:   ORUL Odds Ratio 95%-CI upper limit       <NA> 7.451853856
-#> 4:   ORLL Odds Ratio 95%-CI lower limit       <NA> 0.008387175
+#> 1:     OR                    Odds Ratio       <NA>   4.0000000
+#> 2:     SE     Odds Ratio standard error       <NA>   1.7320508
+#> 3:   ORUL Odds Ratio 95%-CI upper limit       <NA> 119.2296617
+#> 4:   ORLL Odds Ratio 95%-CI lower limit       <NA>   0.1341948
 ```

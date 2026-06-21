@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">chefStats</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,21 @@
       <small>Source: <a href="https://github.com/hta-pharma/chefStats/blob/feature/CRAN_submission/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="chefstats-020">chefStats 0.2.0<a class="anchor" aria-label="anchor" href="#chefstats-020"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/RR.html">RR()</a></code>, <code><a href="../reference/OR.html">OR()</a></code>, and <code><a href="../reference/RD.html">RD()</a></code> now return effects in the <strong>conventional direction</strong>: risk/odds of the non-reference (intervention) arm over the reference arm, and <code>risk(non-reference) - risk(reference)</code> for risk difference. Previous versions returned the reciprocal for <code>RR</code>/<code>OR</code> and a sign-flipped value for <code>RD</code>. Numerical outputs from prior versions are not directly comparable. Confidence-interval endpoints (<code>RRLL</code>/<code>RRUL</code>, <code>ORLL</code>/<code>ORUL</code>, <code>RDLL</code>/<code>RDUL</code>) follow the same convention.</li>
+<li>
+<code><a href="../reference/make_two_by_two_.html">make_two_by_two_()</a></code> now returns the non-reference treatment in row 1 and the reference treatment in row 2, matching the convention assumed by the effect estimators. Code reading the matrix by <code>rownames</code> is unaffected; code indexing by position needs to be reviewed.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/make_two_by_two_.html">make_two_by_two_()</a></code> now deduplicates by <code>(subject, treatment)</code> instead of by subject alone. This fixes incorrect 2×2 cells for designs where the same <code>USUBJID</code> appears under more than one treatment value (e.g. crossover); parallel-group analyses are unaffected.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="chefstats-011">chefStats 0.1.1<a class="anchor" aria-label="anchor" href="#chefstats-011"></a></h2>
 <ul><li>Centralized the Git-Actions to {ramnog}</li>

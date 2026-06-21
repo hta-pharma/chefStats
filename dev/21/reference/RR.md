@@ -79,8 +79,8 @@ RR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
    subjectid_var = "USUBJID")
 #>     label                      description qualifiers      value
 #>    <char>                           <char>     <char>      <num>
-#> 1:     RR                    Relative Risk       <NA> 0.50000000
-#> 2:     SE     Relative Risk standard error       <NA> 0.91287093
-#> 3:   RRUL Relative Risk 95%-CI upper limit       <NA> 2.99231389
-#> 4:   RRLL Relative Risk 95%-CI lower limit       <NA> 0.08354738
+#> 1:     RR                    Relative Risk       <NA>  2.0000000
+#> 2:     SE     Relative Risk standard error       <NA>  0.9128709
+#> 3:   RRUL Relative Risk 95%-CI upper limit       <NA> 11.9692555
+#> 4:   RRLL Relative Risk 95%-CI lower limit       <NA>  0.3341895
 ```

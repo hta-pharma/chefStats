@@ -78,13 +78,13 @@ make_two_by_two_by_k_(dat, event_index = c(1L, 3L, 5L, 7L),
 #> , , M
 #> 
 #>         outcome_YES outcome_NO
-#> Placebo           1          1
 #> Active            1          1
+#> Placebo           1          1
 #> 
 #> , , F
 #> 
 #>         outcome_YES outcome_NO
-#> Placebo           1          1
 #> Active            1          1
+#> Placebo           1          1
 #> 
 ```

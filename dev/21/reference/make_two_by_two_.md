@@ -85,6 +85,6 @@ make_two_by_two_(dat, event_index = c(1L, 2L, 4L),
                  treatment_var = "TRT", treatment_refval = "Placebo",
                  subjectid_var = "USUBJID")
 #>         outcome_YES outcome_NO
-#> Placebo           1          2
 #> Active            2          1
+#> Placebo           1          2
 ```

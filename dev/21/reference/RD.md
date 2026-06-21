@@ -82,10 +82,10 @@ data.table::setkey(dat, INDEX_)
 RD(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
    treatment_var = "TRT", treatment_refval = "Placebo",
    subjectid_var = "USUBJID")
-#>     label                        description qualifiers        value
-#>    <char>                             <char>     <char>        <num>
-#> 1:     RD                    Risk Difference       <NA>  -33.3333333
-#> 2:     SE     Risk Difference standard error       <NA>    0.3849002
-#> 3:   RDUL Risk Difference 95%-CI upper limit       <NA>   42.1057156
-#> 4:   RDLL Risk Difference 95%-CI lower limit       <NA> -108.7723823
+#>     label                        description qualifiers       value
+#>    <char>                             <char>     <char>       <num>
+#> 1:     RD                    Risk Difference       <NA>  33.3333333
+#> 2:     SE     Risk Difference standard error       <NA>   0.3849002
+#> 3:   RDUL Risk Difference 95%-CI upper limit       <NA> 108.7723823
+#> 4:   RDLL Risk Difference 95%-CI lower limit       <NA> -42.1057156
 ```
