@@ -1,6 +1,6 @@
 Package: chefStats
 Title: Provide Methods for Different Statistics
-Version: 0.1.1
+Version: 0.2.0
 Authors@R:
     c(person(given = "Matthew David Phelps",
              role = "aut",

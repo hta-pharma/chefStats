@@ -20,34 +20,35 @@ test_that("RR works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, on treatment
+  # Outcome, non-reference arm (Placebo)
   a <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, no treatment
+  # Outcome, reference arm (Xanomeline High Dose)
   c_ <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, on treatment
+  # NO Outcome, non-reference arm (Placebo)
   b <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
-      SAFFL == "Y" &
-      (AEDECOD != "ERYTHEMA" |
-        is.na(AEDECOD))] |>
-    NROW()
-
-  # Outcome, no treatment
-  d <-
     x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
+  # NO Outcome, reference arm (Xanomeline High Dose)
+  d <-
+    x_no_event[TRT01A == "Xanomeline High Dose" &
+      SAFFL == "Y" &
+      (AEDECOD != "ERYTHEMA" |
+        is.na(AEDECOD))] |>
+    NROW()
+
+  # RR = risk(non-reference) / risk(reference)
   rr <- (a / sum(a, b)) / (c_ / sum(c_, d))
   expect_equal(actual_total[label == "RR"]$value, rr)
   expect_type(actual_total$value, "double")
@@ -94,24 +95,25 @@ test_that("RR works when 0 events", {
     unique(by = "USUBJID")
 
   two_by_two_ish <- x[, .N, by = .(TRT01A, event)]
-  # Outcome, on treatment
+  # Outcome, non-reference arm (Placebo)
   a <-
     x[(event) &
-      TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
+      TRT01A == "Placebo"] |> NROW() + 0.5
 
-  # NO Outcome, on treatment
+  # NO Outcome, non-reference arm (Placebo)
   b <-
     x[!(event) &
-      TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
+      TRT01A == "Placebo"] |> NROW() + 0.5
 
-  # Outcome, no treatment
+  # Outcome, reference arm (Xanomeline High Dose)
   c <-
-    x[(event) & TRT01A == "Placebo"] |> NROW() + 0.5
+    x[(event) & TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
 
-  # Outcome, no treatment
+  # NO Outcome, reference arm (Xanomeline High Dose)
   d <-
-    x[!(event) & TRT01A == "Placebo"] |> NROW() + 0.5
+    x[!(event) & TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
 
+  # RR = risk(non-reference) / risk(reference)
   rr <- (a / sum(a, b)) / (c / sum(c, d))
   se <-
     sqrt(+1 / a + 1 / c - 1 / sum(a,b) - 1 /
@@ -146,34 +148,35 @@ test_that("OR works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, on treatment
+  # Outcome, non-reference arm (Placebo)
   a <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, no treatment
+  # Outcome, reference arm (Xanomeline High Dose)
   c_ <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, on treatment
+  # NO Outcome, non-reference arm (Placebo)
   b <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
-      SAFFL == "Y" &
-      (AEDECOD != "ERYTHEMA" |
-        is.na(AEDECOD))] |>
-    NROW()
-
-  # Outcome, no treatment
-  d <-
     x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
+  # NO Outcome, reference arm (Xanomeline High Dose)
+  d <-
+    x_no_event[TRT01A == "Xanomeline High Dose" &
+      SAFFL == "Y" &
+      (AEDECOD != "ERYTHEMA" |
+        is.na(AEDECOD))] |>
+    NROW()
+
+  # OR = odds(non-reference) / odds(reference) = (a*d) / (b*c)
   or <- prod(a, d) / prod(b, c_)
   expect_equal(actual[label == "OR"]$value, or)
   expect_type(actual$value, "double")
@@ -207,36 +210,37 @@ test_that("RD works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, on treatment
+  # Outcome, non-reference arm (Placebo)
   a <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, no treatment
+  # Outcome, reference arm (Xanomeline High Dose)
   c_ <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, on treatment
+  # NO Outcome, non-reference arm (Placebo)
   b <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
-      SAFFL == "Y" &
-      (AEDECOD != "ERYTHEMA" |
-        is.na(AEDECOD))] |>
-    NROW()
-
-  # Outcome, no treatment
-  d <-
     x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
+  # NO Outcome, reference arm (Xanomeline High Dose)
+  d <-
+    x_no_event[TRT01A == "Xanomeline High Dose" &
+      SAFFL == "Y" &
+      (AEDECOD != "ERYTHEMA" |
+        is.na(AEDECOD))] |>
+    NROW()
+
+  # RD = risk(non-reference) - risk(reference), as percent
   expected <- ((a / sum(a, b)) - (c_ / sum(c_, d))) * 100
   expect_equal(actual[label == "RD" &
     strata_var == "TOTAL_"]$value, expected)
@@ -270,38 +274,39 @@ test_that("RD works when as_pct == FALSE", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, on treatment
+  # Outcome, non-reference arm (Placebo)
   a <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
-  # Outcome, no treatment
+  # Outcome, reference arm (Xanomeline High Dose)
   c_ <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
 
-  # NO Outcome, on treatment
+  # NO Outcome, non-reference arm (Placebo)
   b <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
-      SAFFL == "Y" &
-      (AEDECOD != "ERYTHEMA" |
-        is.na(AEDECOD))] |>
-    NROW()
-
-  # Outcome, no treatment
-  d <-
     x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
+  # NO Outcome, reference arm (Xanomeline High Dose)
+  d <-
+    x_no_event[TRT01A == "Xanomeline High Dose" &
+      SAFFL == "Y" &
+      (AEDECOD != "ERYTHEMA" |
+        is.na(AEDECOD))] |>
+    NROW()
+
+  # RD = risk(non-reference) - risk(reference), as fraction
   expected <- ((a / sum(a, b)) - (c_ / sum(c_, d)))
   expect_equal(actual[label == "RD" &
     strata_var == "TOTAL_"]$value, expected)

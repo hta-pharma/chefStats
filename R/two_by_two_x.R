@@ -8,7 +8,12 @@
 #'  |Comparator|C      |         D |
 #'
 #'  Where A, B, C, and D are the distinct number of subjects satisfying the
-#'  criteria of each 2x2 cell.
+#'  criteria of each 2x2 cell. "Treatment" is the **non-reference** arm
+#'  (i.e. the treatment level that is *not* `treatment_refval`) and
+#'  "Comparator" is the reference arm. The downstream effect estimators
+#'  (`relative_risk_`, `odds_ratio_amnog`, `risk_diff`) consume this matrix
+#'  and compute effects in the conventional direction:
+#'  risk/odds of non-reference (row 1) over reference (row 2).
 #'
 #'  Only observations that have a Treatment value recorded are returned.
 
@@ -91,8 +96,11 @@ dat_unique <-
     two_by_two_ <-
       data.table::dcast.data.table(two_by_two_, treatment ~ is_event, value.var = "N")
 
-    # Reorder rows to ensure the reference treatment is the first row and column
-    # order is standardized
+    # Reorder rows so the non-reference (comparator) treatment is in row 1 and
+    # the reference treatment is in row 2. The downstream effect estimators
+    # (relative_risk_, odds_ratio_amnog, risk_diff) treat row 1 as the
+    # non-reference/exposed arm — see the function docstring for the
+    # convention.
     dt_match <- two_by_two_[treatment == treatment_refval]
     dt_rest <- two_by_two_[treatment != treatment_refval]
     two_by_two <- rbind(dt_rest, dt_match) |>
