@@ -95,7 +95,7 @@ dat_unique <-
     # order is standardized
     dt_match <- two_by_two_[treatment == treatment_refval]
     dt_rest <- two_by_two_[treatment != treatment_refval]
-    two_by_two <- rbind(dt_match, dt_rest) |>
+    two_by_two <- rbind(dt_rest, dt_match) |>
       data.table::setnames(old = c("FALSE", "TRUE"),
                new = c("outcome_NO", "outcome_YES")) |>
       data.table::setcolorder(neworder = c("treatment", "outcome_YES", "outcome_NO"))
