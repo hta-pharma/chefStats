@@ -71,7 +71,8 @@ test_that("Demographics (continuous) work when no strata level is provided", {
                       ep$analysis_data_container,
                       type = "stat_by_strata_by_trt") |>
     tidyr::unnest(cols = stat_result) |>
-    setDT()
+    setDT() |>
+    (\(x) x[order(treatment_value)])()
 
   # EXPECT ------------------------------------------------------------------
   x <- mk_advs()
