@@ -56,9 +56,10 @@ p_val_interaction <- function(dat,
     return(
       data.table(
         label = "P-value interaction",
-        description = stat$method,
+        description = "P-value interaction",
         qualifiers = NA_character_,
-        value = as.double(stat$p.value)
+        value = as.double(stat$p.value),
+        method = stat$method
       ))
     
   }
@@ -67,7 +68,8 @@ p_val_interaction <- function(dat,
     label = NA_character_,
     description = "P-value interaction not conducted",
     qualifiers = NA_character_,
-    value = NA_real_
+    value = NA_real_,
+    method = NA_character_
   )
 }
 

@@ -31,7 +31,8 @@ n_subj <- function(dat,
     description = "Number of subjects",
     qualifiers = NA_character_,
     label = "N",
-    value = as.double(stat)
+    value = as.double(stat),
+    method = NA_character_
   )
   out[]
 }
@@ -74,7 +75,8 @@ n_event <-
         description = "Number of events",
         qualifiers = NA_character_,
         label = "E",
-        value = as.double(stat)
+        value = as.double(stat),
+        method = NA_character_
       )
     )
     
@@ -121,7 +123,8 @@ n_subj_event <-
         description = "Number of subjects with events",
         qualifiers = NA_character_,
         label = "n",
-        value = as.double(stat)
+        value = as.double(stat),
+        method = NA_character_
       )
     )
   }
@@ -170,7 +173,8 @@ p_subj_event <-
         description = "Proportion of subjects with events",
         qualifiers = NA_character_,
         label = "(%)",
-        value = stat
+        value = stat,
+        method = NA_character_
       )
     )
   }
@@ -237,7 +241,8 @@ count_set <- function(dat,
       description = description_vec,
       qualifiers = NA_character_,
       label = label_vec,
-      value = stat_vec
+      value = stat_vec,
+      method = NA_character_
     )
   )
 }
@@ -298,10 +303,11 @@ demographics_continuous <- function(dat,
       label = names(stat),
       description = "Demographics",
       qualifiers = var,
-      value = as.double(unlist(stat[1, .SD]))
+      value = as.double(unlist(stat[1, .SD])),
+      method = NA_character_
     )
   )
-  
+
 }
 
 
@@ -353,7 +359,8 @@ demographics_counts <- function(dat,
       label = names(stat),
       description = paste0("Demographics"),
       qualifiers = NA_character_,
-      value = as.double(unlist(stat[1, .SD]))
+      value = as.double(unlist(stat[1, .SD])),
+      method = NA_character_
     )
   )
 }
@@ -371,17 +378,23 @@ demographics_counts <- function(dat,
 total_missing_counts <- function(dat_cell, stratify_by) {
   stratify_by_subset <- setdiff(stratify_by, "TOTAL_")
   stat <- lapply(stratify_by_subset, function(strata_i) {
-    stat <- dat_cell[, .(n_non_missing = sum(!is.na(get(strata_i))),
-                         n_missing = sum(is.na(get(strata_i))))]
+    dat_cell[, .(n_non_missing = sum(!is.na(get(strata_i))),
+                 n_missing = sum(is.na(get(strata_i))))]
   })
-  value <- NULL
-  
-  out <- data.table::rbindlist(stat) |>
-    data.table::transpose(keep.names = "label") |>
-    data.table::setnames(new = c("label", stratify_by_subset)) |>
-    data.table::melt.data.table(measure.vars = stratify_by_subset,
-                                variable.name = "qualifiers")
-  out[, `:=`(value = as.double(value), description = "Demographics")]
+
+  # Reshape to long format: each variable gets its own rows for n_non_missing and n_missing
+  out <- Map(function(s, var_name) {
+    s[, `:=`(qualifiers = var_name)]
+    s |> data.table::melt.data.table(
+      id.vars = "qualifiers",
+      measure.vars = c("n_non_missing", "n_missing"),
+      variable.name = "label",
+      value.name = "value"
+    )
+  }, stat, stratify_by_subset) |>
+    data.table::rbindlist()
+
+  out[, `:=`(value = as.double(value), description = "Demographics", method = NA_character_)]
   out[]
 }
 
@@ -432,7 +445,8 @@ p_subj_event_by_trt <-
           description = "Proportion of subjects with events",
           qualifiers = NA_character_,
           label = "(%)",
-          value = NaN
+          value = NaN,
+          method = NA_character_
         )
       )
     }
@@ -446,9 +460,10 @@ p_subj_event_by_trt <-
         description = "Proportion of subjects with events",
         qualifiers = NA_character_,
         label = "(%)",
-        value = n_subev / n_sub * 100
+        value = n_subev / n_sub * 100,
+        method = NA_character_
       )
-    
+
     return(out)
   }
 
@@ -485,9 +500,10 @@ obs_time_by_trt <- function(dat,
       description = "Observation time (years)",
       qualifiers = NA_character_,
       label = "Obs. time",
-      value = round(obs_time)
+      value = round(obs_time),
+      method = NA_character_
     )
-  
+
   return(out)
 }
 
@@ -543,9 +559,10 @@ n_event_100y <- function(dat,
       description = "Events per 100 years of exposure",
       qualifiers = NA_character_,
       label = "R",
-      value = round(n_event / obs_time * 100)
+      value = round(n_event / obs_time * 100),
+      method = NA_character_
     )
-  
+
   return(out)
 }
 
@@ -592,7 +609,8 @@ mean_value <- function(dat,
     label = "mean",
     description = "Mean value",
     qualifiers = var,
-    value = stat
+    value = stat,
+    method = NA_character_
   ))
 }
 
@@ -639,7 +657,8 @@ sd_value <- function(dat,
       label = "SD",
       description = "Standard deviation",
       qualifiers = var,
-      value = stat
+      value = stat,
+      method = NA_character_
     )
   )
 }

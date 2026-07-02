@@ -61,7 +61,8 @@ RR <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   )
 }
 
@@ -128,7 +129,8 @@ OR <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   ))
 }
 
@@ -198,7 +200,8 @@ RD <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   ))
 }
 
@@ -269,12 +272,13 @@ p_val <-
 
     return(data.table(
       label = "p-value",
-      description = ifelse(
+      description = "p-value",
+      qualifiers = NA_character_,
+      value = as.double(pval),
+      method = ifelse(
         test_method == "barnard",
         "Barnard's test",
         "Fisher's exact test"
-      ),
-      qualifiers = NA_character_,
-      value = as.double(pval)
+      )
     ))
   }
