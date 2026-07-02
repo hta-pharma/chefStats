@@ -23,7 +23,7 @@ the definition of an 'event'. Matching is done via the \code{INDEX_} column in
 
 \item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
 specified by the \code{INDEX_} column in \code{dat}) that match the population to be
-analyzed. See the "Endpoint Events" vignette in {ramnog}
+analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 for more information.}
 
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
@@ -39,4 +39,17 @@ A data.table containing the number of events per 100 years of exposure.
 }
 \description{
 Calculate number of events per 100 years of exposure
+}
+\examples{
+dat <- data.table::data.table(
+  USUBJID  = c("S1", "S2", "S3", "S4"),
+  TRT      = c("Active", "Active", "Placebo", "Placebo"),
+  INTRDURY = c(1.5, 2.0, 0.8, 1.2)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+n_event_100y(dat, event_index = c(1L, 2L),
+             cell_index = dat[TRT == "Active"][["INDEX_"]],
+             subjectid_var = "USUBJID",
+             treatment_var = "TRT", treatment_value = "Active")
 }

@@ -55,7 +55,7 @@ test_that("Demographics (continuous) work when no strata level is provided", {
   ep <- chef::mk_endpoint_str(
     data_prepare = mk_advs,
     treatment_var = "TRT01A",
-    treatment_refval = "Xanomeline High Dose",
+    treatment_refval = "Placebo",
     pop_var = "SAFFL",
     pop_value = "Y",
     stat_by_strata_by_trt = list(c(demographics_continuous,
@@ -70,8 +70,14 @@ test_that("Demographics (continuous) work when no strata level is provided", {
     chef::apply_stats(ep$ep,
                       ep$analysis_data_container,
                       type = "stat_by_strata_by_trt") |>
-    tidyr::unnest(cols = stat_result) |>
-    setDT()
+    (\(x) {
+      x[, treatment_value := vapply(stat_metadata,
+                                     function(m) m[[treatment_var[[1]]]],
+                                     character(1))]
+      x[order(treatment_value)] |>
+        tidyr::unnest(cols = stat_result) |>
+        data.table::setDT()
+    })()
 
   # EXPECT ------------------------------------------------------------------
   x <- mk_advs()

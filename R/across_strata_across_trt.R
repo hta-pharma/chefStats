@@ -14,6 +14,18 @@
 #'
 #' @return A data.table containing the statistics for p-value interaction tests.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"),
+#'   TRT     = c("Active", "Active", "Active", "Active",
+#'               "Placebo", "Placebo", "Placebo", "Placebo"),
+#'   STRATA  = c("M", "M", "F", "F", "M", "M", "F", "F")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_val_interaction(dat, event_index = c(1L, 3L, 5L, 7L),
+#'                   treatment_var = "TRT", treatment_refval = "Placebo",
+#'                   subjectid_var = "USUBJID", strata_var = "STRATA")
 p_val_interaction <- function(dat,
                               event_index,
                               treatment_var,
@@ -44,9 +56,10 @@ p_val_interaction <- function(dat,
     return(
       data.table(
         label = "P-value interaction",
-        description = stat$method,
+        description = "P-value interaction",
         qualifiers = NA_character_,
-        value = as.double(stat$p.value)
+        value = as.double(stat$p.value),
+        method = stat$method
       ))
     
   }
@@ -55,7 +68,8 @@ p_val_interaction <- function(dat,
     label = NA_character_,
     description = "P-value interaction not conducted",
     qualifiers = NA_character_,
-    value = NA_real_
+    value = NA_real_,
+    method = NA_character_
   )
 }
 
@@ -69,7 +83,13 @@ p_val_interaction <- function(dat,
 #' @param ... optional arguments to
 #' @return A list containing Hedges G statistics.
 #' @export
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   treatment_val = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo"),
+#'   stat_var      = rep(c("N_sub", "mean_value", "sd_value"), 2),
+#'   stat_val      = c(50, 12.3, 2.1, 50, 10.1, 2.5)
+#' )
+#' hedges_g(dat, reference_val = "Placebo")
 hedges_g <-
   function(dat, reference_val, safe_mode = FALSE, ...) {
     n_trt <-

@@ -9,7 +9,7 @@
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -18,6 +18,16 @@
 #' 
 #' @return A data.table containing Relative Risk statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' RR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 RR <- function(dat,
                event_index,
                cell_index,
@@ -51,7 +61,8 @@ RR <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   )
 }
 
@@ -66,7 +77,7 @@ RR <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -75,6 +86,16 @@ RR <- function(dat,
 #'
 #' @return A data.table containing Odds Ratio statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' OR(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 OR <- function(dat,
                event_index,
                cell_index,
@@ -108,7 +129,8 @@ OR <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   ))
 }
 
@@ -124,7 +146,7 @@ OR <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in the data.
 #' @param treatment_refval character. The reference value of the treatment variable in the data.
@@ -134,6 +156,16 @@ OR <- function(dat,
 #'
 #' @return A data.table containing Risk Difference statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' RD(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'    treatment_var = "TRT", treatment_refval = "Placebo",
+#'    subjectid_var = "USUBJID")
 RD <- function(dat,
                event_index,
                cell_index,
@@ -168,7 +200,8 @@ RD <- function(dat,
     label = names(out),
     description = desc,
     qualifiers = NA_character_,
-    value = as.double(out)
+    value = as.double(out),
+    method = NA_character_
   ))
 }
 
@@ -184,7 +217,7 @@ RD <- function(dat,
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param safe_mode Boolean determing if the function should fail when given
 #'   input that cannot be calculated (`safe_mode = TRUE`), or if it should silently return a `NA` value (default).
@@ -196,6 +229,16 @@ RD <- function(dat,
 #' @param ... Optional parameters.  
 #' @return A data.table containing p-value statistics.
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' p_val(dat, event_index = c(1L, 2L, 4L), cell_index = dat[["INDEX_"]],
+#'       treatment_var = "TRT", treatment_refval = "Placebo",
+#'       subjectid_var = "USUBJID")
 p_val <-
   function(dat,
            event_index,
@@ -229,12 +272,13 @@ p_val <-
 
     return(data.table(
       label = "p-value",
-      description = ifelse(
+      description = "p-value",
+      qualifiers = NA_character_,
+      value = as.double(pval),
+      method = ifelse(
         test_method == "barnard",
         "Barnard's test",
         "Fisher's exact test"
-      ),
-      qualifiers = NA_character_,
-      value = as.double(pval)
+      )
     ))
   }

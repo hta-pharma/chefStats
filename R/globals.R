@@ -2,8 +2,6 @@
 utils::globalVariables(
   c(
     ":=",
-    "%>%",
-    ".",
     ".SD",
     ".I",
     "..keep",
@@ -12,6 +10,7 @@ utils::globalVariables(
     "stat_var",
     "value",
     "N_sub",
-    "N_no_event"
+    "N_no_event",
+    "J"
   )
 )

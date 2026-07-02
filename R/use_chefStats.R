@@ -9,7 +9,10 @@
 #'
 #' @return Nothing, run for side-effect (writes file to disk)
 #' @export
-#'
+#' @examples
+#' \dontrun{
+#' use_chefStats(fn_name = "my_stat_fn", fn_type = "stat_by_strata_by_trt")
+#' }
 use_chefStats <-
   function(fn_name,
            fn_type = c(

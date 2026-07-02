@@ -43,3 +43,16 @@ A data.table containing the statistics for p-value interaction tests.
 \description{
 Wrapper for P-value of interaction tests
 }
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"),
+  TRT     = c("Active", "Active", "Active", "Active",
+              "Placebo", "Placebo", "Placebo", "Placebo"),
+  STRATA  = c("M", "M", "F", "F", "M", "M", "F", "F")
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+p_val_interaction(dat, event_index = c(1L, 3L, 5L, 7L),
+                  treatment_var = "TRT", treatment_refval = "Placebo",
+                  subjectid_var = "USUBJID", strata_var = "STRATA")
+}

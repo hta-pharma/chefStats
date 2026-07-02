@@ -21,3 +21,4 @@ statistic pval - p value evtl. based on the Tarone test statistic using a
 \description{
 Breslow-Day test
 }
+\keyword{internal}

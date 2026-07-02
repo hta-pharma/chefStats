@@ -23,3 +23,5 @@ setImgSrc.js
 \.github
 RELEASE_BODY\.txt
 ^\.github$
+^cran-plan\.md$
+^tools$

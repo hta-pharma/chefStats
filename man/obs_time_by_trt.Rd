@@ -11,7 +11,7 @@ obs_time_by_trt(dat, cell_index, subjectid_var, ...)
 
 \item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
 specified by the \code{INDEX_} column in \code{dat}) that match the population to be
-analyzed. See the "Endpoint Events" vignette in {ramnog}
+analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 for more information.}
 
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
@@ -23,4 +23,13 @@ A data.table containing the observation time by treatment.
 }
 \description{
 Calculate observation time by treatment
+}
+\examples{
+dat <- data.table::data.table(
+  USUBJID  = c("S1", "S2", "S3"),
+  INTRDURY = c(1.5, 2.0, 0.8)
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+obs_time_by_trt(dat, cell_index = dat[["INDEX_"]], subjectid_var = "USUBJID")
 }

@@ -23,7 +23,7 @@ the definition of an 'event'. Matching is done via the \code{INDEX_} column in
 
 \item{cell_index}{A vector of integers referencing the rows of \code{dat} (as
 specified by the \code{INDEX_} column in \code{dat}) that match the population to be
-analyzed. See the "Endpoint Events" vignette in {ramnog}
+analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 for more information.}
 
 \item{subjectid_var}{character. Name of the subject identifier variable in the data (default is "USUBJID").}
@@ -39,4 +39,16 @@ A data.table containing the percentage of subjects with events by treatment.
 }
 \description{
 Calculate the percentage of subjects with events by treatment and strata.
+}
+\examples{
+dat <- data.table::data.table(
+  USUBJID = c("S1", "S2", "S3", "S4"),
+  TRT     = c("Active", "Active", "Placebo", "Placebo")
+)
+dat[, INDEX_ := .I]
+data.table::setkey(dat, INDEX_)
+p_subj_event_by_trt(dat, event_index = c(1L, 2L),
+                    cell_index = dat[TRT == "Active"][["INDEX_"]],
+                    subjectid_var = "USUBJID",
+                    treatment_var = "TRT", treatment_value = "Active")
 }

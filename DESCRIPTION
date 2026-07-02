@@ -1,6 +1,6 @@
 Package: chefStats
-Title: Provide methods for different statistics
-Version: 0.1.1
+Title: Provide Methods for Different Statistics
+Version: 0.2.0
 Authors@R:
     c(person(given = "Matthew David Phelps",
              role = "aut",
@@ -10,7 +10,7 @@ Authors@R:
              email = "nosj@novonordisk.com"),
       person(given = "Henrik Sparre Spiegelhauer",
              role = "aut",
-             email = "hspu@novonordisk.com"),       
+             email = "hspu@novonordisk.com"),
       person(given = "ABIU (Anders Bilgrau)",
              role = "aut",
              email = "abiu@novonordisk.com"),
@@ -22,14 +22,21 @@ Authors@R:
              email = "cino@novonordisk.com"),
       person(given = "Novo Nordisk A/S",
              role = "cph"))
+Author: Christian Haargaard Olsen
 Maintainer: Christian Haargaard Olsen <cino@novonordisk.com>
-Description: Provide a library of methods that can be used to calculate different statistics.
+Description: Provides a library of statistical methods for use in clinical trial evidence
+    generation workflows. Functions cover subject counts, event rates, odds ratios,
+    relative risks, risk differences, p-values, and demographic summaries, all
+    formatted for use with the 'chef' pipeline framework. Designed to support
+    healthcare technology assessments such as AMNOG dossier submissions.
 License: MIT + file LICENSE
+BugReports: https://github.com/hta-pharma/chefStats/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Remotes:
+    hta-pharma/chef@feature/CRAN_submission
 Suggests:
-    testr,
     covr,
     pkgdown,
     testthat,
@@ -39,23 +46,18 @@ Suggests:
     pharmaverseadam,
     tidyr,
     purrr,
-    kableExtra
+    kableExtra,
+    withr
 Imports:
     Barnard,
     stats,
     data.table (>= 1.14.2),
-    magrittr,
     checkmate,
     cli,
     usethis,
-	DescTools
-Remotes:
-    hta-pharma/chef,
-    matthew-phelps/testr
+    DescTools
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/testthat/parallel: true
-URL: 
-       https://hta-pharma.github.io/chefStats/,
-       https://github.com/hta-pharma/chefStats,
-       https://app.codecov.io/github/hta-pharma/chefStats
+URL: https://hta-pharma.github.io/chefStats/,
+    https://github.com/hta-pharma/chefStats

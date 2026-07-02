@@ -8,7 +8,12 @@
 #'  |Comparator|C      |         D |
 #'
 #'  Where A, B, C, and D are the distinct number of subjects satisfying the
-#'  criteria of each 2x2 cell.
+#'  criteria of each 2x2 cell. "Treatment" is the **non-reference** arm
+#'  (i.e. the treatment level that is *not* `treatment_refval`) and
+#'  "Comparator" is the reference arm. The downstream effect estimators
+#'  (`relative_risk_`, `odds_ratio_amnog`, `risk_diff`) consume this matrix
+#'  and compute effects in the conventional direction:
+#'  risk/odds of non-reference (row 1) over reference (row 2).
 #'
 #'  Only observations that have a Treatment value recorded are returned.
 
@@ -18,15 +23,24 @@
 #'   `dat`.
 #' @param cell_index A vector of integers referencing the rows of `dat` (as
 #'   specified by the `INDEX_` column in `dat`) that match the population to be
-#'   analyzed. See the "Endpoint Events" vignette in {ramnog}
+#'   analyzed. See the "Endpoint Events" vignette in \pkg{ramnog}
 #'   for more information.
 #' @param treatment_var character. The name of the treatment variable in `dat`.
 #' @param treatment_refval character. The reference value of the treatment variable in `dat`.
 #' @param subjectid_var character. Name of the subject identifier variable in `dat` (default is "USUBJID").
 #' @return A matrix
 #' @export
-#' @importFrom magrittr %>%
-#'
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6"),
+#'   TRT     = c("Active", "Active", "Active", "Placebo", "Placebo", "Placebo")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' make_two_by_two_(dat, event_index = c(1L, 2L, 4L),
+#'                  cell_index = dat[["INDEX_"]],
+#'                  treatment_var = "TRT", treatment_refval = "Placebo",
+#'                  subjectid_var = "USUBJID")
 make_two_by_two_ <-
   function(dat,
            event_index,
@@ -35,7 +49,7 @@ make_two_by_two_ <-
            treatment_refval,
            subjectid_var) {
     N <- is_cell <- is_event <- INDEX_ <- treatment <- NULL
-    
+
     dat_ <- copy(dat)
     n_trt_levels <-
       dat[, unique(dat, by = treatment_var)][[treatment_var]] |>
@@ -59,9 +73,9 @@ make_two_by_two_ <-
 
     # We don't want to know how many times each subject had an event, only if
     # they had one or not.
-    dat_unique <-
-      unique(dat_, by = subjectid_var) |>
-      data.table::setkeyv(c("is_event", "is_cell", treatment_var))
+dat_unique <-
+    unique(dat_, by = c(subjectid_var, treatment_var)) |>
+    data.table::setkeyv(c("is_event", "is_cell", treatment_var))
 
     # CJ() allows us to aggregate while keeping the 0s
     two_by_two_long <-
@@ -82,11 +96,14 @@ make_two_by_two_ <-
     two_by_two_ <-
       data.table::dcast.data.table(two_by_two_, treatment ~ is_event, value.var = "N")
 
-    # Reorder rows to ensure the reference treatment is the first row and column
-    # order is standardized
+    # Reorder rows so the non-reference (comparator) treatment is in row 1 and
+    # the reference treatment is in row 2. The downstream effect estimators
+    # (relative_risk_, odds_ratio_amnog, risk_diff) treat row 1 as the
+    # non-reference/exposed arm — see the function docstring for the
+    # convention.
     dt_match <- two_by_two_[treatment == treatment_refval]
     dt_rest <- two_by_two_[treatment != treatment_refval]
-    two_by_two <- rbind(dt_match, dt_rest) |>
+    two_by_two <- rbind(dt_rest, dt_match) |>
       data.table::setnames(old = c("FALSE", "TRUE"),
                new = c("outcome_NO", "outcome_YES")) |>
       data.table::setcolorder(neworder = c("treatment", "outcome_YES", "outcome_NO"))
@@ -137,6 +154,19 @@ ensure_complete_two_by_two <- function(two_by_two_long, treatment_var) {
 #' @return A two-by-two-by-k array where k represents the number of subgroups
 #'   (strata).
 #' @export
+#' @examples
+#' dat <- data.table::data.table(
+#'   USUBJID = c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"),
+#'   TRT     = c("Active", "Active", "Active", "Active",
+#'               "Placebo", "Placebo", "Placebo", "Placebo"),
+#'   STRATA  = c("M", "M", "F", "F", "M", "M", "F", "F")
+#' )
+#' dat[, INDEX_ := .I]
+#' data.table::setkey(dat, INDEX_)
+#' make_two_by_two_by_k_(dat, event_index = c(1L, 3L, 5L, 7L),
+#'                        strata_var = "STRATA",
+#'                        treatment_var = "TRT", treatment_refval = "Placebo",
+#'                        subjectid_var = "USUBJID")
 make_two_by_two_by_k_ <-
   function(dat,
            event_index,

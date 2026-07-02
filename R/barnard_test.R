@@ -8,6 +8,7 @@
 #'   error (default), or return an NA (safe_mode = FALSE)
 #'
 #' @return 2-sided p-value for the Barnards Unconditional Exact test
+#' @keywords internal
 #' @importFrom Barnard barnard.test
 
 barnard_test_ <-
