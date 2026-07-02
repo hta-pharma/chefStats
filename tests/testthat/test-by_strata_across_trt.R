@@ -8,7 +8,7 @@ test_that("RR works", {
     event_index = setup$event_index,
     cell_index = setup$cell_index_total,
     treatment_var = "TRT01A",
-    treatment_refval = "Xanomeline High Dose",
+    treatment_refval = "Placebo",
     subjectid_var = "USUBJID"
   )
   
@@ -20,29 +20,29 @@ test_that("RR works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, non-reference arm (Placebo)
+  # Outcome, non-reference arm (Xanomeline High Dose)
   a <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, reference arm (Xanomeline High Dose)
+  # Outcome, reference arm (Placebo)
   c_ <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, non-reference arm (Placebo)
+  # NO Outcome, non-reference arm (Xanomeline High Dose)
   b <-
-    x_no_event[TRT01A == "Placebo" &
+    x_no_event[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
-  # NO Outcome, reference arm (Xanomeline High Dose)
+  # NO Outcome, reference arm (Placebo)
   d <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
+    x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
@@ -79,7 +79,7 @@ test_that("RR works when 0 events", {
     event_index = event_index,
     cell_index = cell_index_f,
     treatment_var = "TRT01A",
-    treatment_refval = "Xanomeline High Dose",
+    treatment_refval = "Placebo",
     subjectid_var = "USUBJID"
   )
   
@@ -95,23 +95,23 @@ test_that("RR works when 0 events", {
     unique(by = "USUBJID")
 
   two_by_two_ish <- x[, .N, by = .(TRT01A, event)]
-  # Outcome, non-reference arm (Placebo)
+  # Outcome, non-reference arm (Xanomeline High Dose)
   a <-
     x[(event) &
-      TRT01A == "Placebo"] |> NROW() + 0.5
+      TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
 
-  # NO Outcome, non-reference arm (Placebo)
+  # NO Outcome, non-reference arm (Xanomeline High Dose)
   b <-
     x[!(event) &
-      TRT01A == "Placebo"] |> NROW() + 0.5
+      TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
 
-  # Outcome, reference arm (Xanomeline High Dose)
+  # Outcome, reference arm (Placebo)
   c <-
-    x[(event) & TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
+    x[(event) & TRT01A == "Placebo"] |> NROW() + 0.5
 
-  # NO Outcome, reference arm (Xanomeline High Dose)
+  # NO Outcome, reference arm (Placebo)
   d <-
-    x[!(event) & TRT01A == "Xanomeline High Dose"] |> NROW() + 0.5
+    x[!(event) & TRT01A == "Placebo"] |> NROW() + 0.5
 
   # RR = risk(non-reference) / risk(reference)
   rr <- (a / sum(a, b)) / (c / sum(c, d))
@@ -136,7 +136,7 @@ test_that("OR works", {
       event_index = setup$event_index,
       cell_index = setup$cell_index_total,
       treatment_var = "TRT01A",
-      treatment_refval = "Xanomeline High Dose",
+      treatment_refval = "Placebo",
       subjectid_var = "USUBJID"
     )
   
@@ -148,29 +148,29 @@ test_that("OR works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, non-reference arm (Placebo)
+  # Outcome, non-reference arm (Xanomeline High Dose)
   a <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, reference arm (Xanomeline High Dose)
+  # Outcome, reference arm (Placebo)
   c_ <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" & AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, non-reference arm (Placebo)
+  # NO Outcome, non-reference arm (Xanomeline High Dose)
   b <-
-    x_no_event[TRT01A == "Placebo" &
+    x_no_event[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
-  # NO Outcome, reference arm (Xanomeline High Dose)
+  # NO Outcome, reference arm (Placebo)
   d <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
+    x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
@@ -210,31 +210,31 @@ test_that("RD works", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, non-reference arm (Placebo)
+  # Outcome, non-reference arm (Xanomeline High Dose)
   a <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
-  # Outcome, reference arm (Xanomeline High Dose)
+  # Outcome, reference arm (Placebo)
   c_ <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
-  # NO Outcome, non-reference arm (Placebo)
+  # NO Outcome, non-reference arm (Xanomeline High Dose)
   b <-
-    x_no_event[TRT01A == "Placebo" &
+    x_no_event[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
-  # NO Outcome, reference arm (Xanomeline High Dose)
+  # NO Outcome, reference arm (Placebo)
   d <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
+    x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
@@ -274,33 +274,33 @@ test_that("RD works when as_pct == FALSE", {
     setorderv("has_event", order = -1L) |>
     unique(by = "USUBJID")
 
-  # Outcome, non-reference arm (Placebo)
+  # Outcome, non-reference arm (Xanomeline High Dose)
   a <-
-    x[TRT01A == "Placebo" &
+    x[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
-  # Outcome, reference arm (Xanomeline High Dose)
+  # Outcome, reference arm (Placebo)
   c_ <-
-    x[TRT01A == "Xanomeline High Dose" &
+    x[TRT01A == "Placebo" &
       SAFFL == "Y" &
       AEDECOD == "ERYTHEMA"] |>
     NROW()
 
   x_no_event <- x[!USUBJID %in% x[(has_event), USUBJID]]
 
-  # NO Outcome, non-reference arm (Placebo)
+  # NO Outcome, non-reference arm (Xanomeline High Dose)
   b <-
-    x_no_event[TRT01A == "Placebo" &
+    x_no_event[TRT01A == "Xanomeline High Dose" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>
     NROW()
 
-  # NO Outcome, reference arm (Xanomeline High Dose)
+  # NO Outcome, reference arm (Placebo)
   d <-
-    x_no_event[TRT01A == "Xanomeline High Dose" &
+    x_no_event[TRT01A == "Placebo" &
       SAFFL == "Y" &
       (AEDECOD != "ERYTHEMA" |
         is.na(AEDECOD))] |>

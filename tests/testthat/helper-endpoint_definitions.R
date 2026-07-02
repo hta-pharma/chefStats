@@ -5,5 +5,5 @@ ep_base <-
     pop_var = "SAFFL",
     pop_value = "Y",
     treatment_var = "TRT01A",
-    treatment_refval = "Xanomeline High Dose"
+    treatment_refval = "Placebo"
   )
