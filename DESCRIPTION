@@ -10,7 +10,7 @@ Authors@R:
              email = "nosj@novonordisk.com"),
       person(given = "Henrik Sparre Spiegelhauer",
              role = "aut",
-             email = "hspu@novonordisk.com"),       
+             email = "hspu@novonordisk.com"),
       person(given = "ABIU (Anders Bilgrau)",
              role = "aut",
              email = "abiu@novonordisk.com"),
@@ -22,6 +22,8 @@ Authors@R:
              email = "cino@novonordisk.com"),
       person(given = "Novo Nordisk A/S",
              role = "cph"))
+Author: Christian Haargaard Olsen
+Maintainer: Christian Haargaard Olsen <cino@novonordisk.com>
 Description: Provides a library of statistical methods for use in clinical trial evidence
     generation workflows. Functions cover subject counts, event rates, odds ratios,
     relative risks, risk differences, p-values, and demographic summaries, all
